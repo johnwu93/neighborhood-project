@@ -18,4 +18,23 @@
     <option name="workingDir" value="$FileDir$" />
     <envs />
   </TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="js" />
+    <option name="immediateSync" value="true" />
+    <option name="name" value="javascript-bundler" />
+    <option name="output" value="" />
+    <option name="outputFilters">
+      <array />
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="/Users/johnwu/code/udacity-starter-code/node_modules/.bin/webpack" />
+    <option name="scopeName" value="source" />
+    <option name="trackOnlyRoot" value="false" />
+    <option name="workingDir" value="$ContentRoot$" />
+    <envs />
+  </TaskOptions>
 </TaskOptions>
