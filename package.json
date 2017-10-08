@@ -4,7 +4,8 @@
   "description": "Configuration settings for writing Front End Development Code for Udacity Projects",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "watch": "gulp watch"
   },
   "author": "John Wu",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.4.0",
     "gulp": "^3.9.1",
+    "gulp-cli": "^1.4.0",
     "gulp-debug": "^3.1.0",
     "gulp-htmlhint": "^0.3.1",
     "gulp-scss": "^1.4.0",
