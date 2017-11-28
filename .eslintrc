@@ -5,7 +5,10 @@
   ],
   "parser": "babel-eslint",
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "prefer-object-spread",
+    "filenames",
+    "dollar-sign"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -20,12 +23,26 @@
     "eol-last": 2,
     "guard-for-in": "error",
     "object-curly-spacing": 0,
+    "prefer-destructuring": "error",
+    "func-names": "error",
+    "func-name-matching": [
+      "error",
+      {
+        "includeCommonJSModuleExports": true
+      }
+    ],
+    "no-confusing-arrow": "error",
     "prefer-arrow-callback": [
       "error",
       {
         "allowNamedFunctions": false,
         "allowUnboundThis": true
       }
-    ]
+    ],
+    "prefer-object-spread/prefer-object-spread": 2,
+    "filenames/match-exported": [ 2, "kebab" ],
+    "filenames/match-regex": [2, "^[a-z\\.]+$", true],
+    "filenames/no-index": 2,
+    "dollar-sign/dollar-sign": [2, "ignoreProperties"]
   }
 }

@@ -32,7 +32,7 @@ module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
 };
 
 
-const includeImagesPlugin = function includeCopyPlugin() {
+const includeImagesPlugin = function includeImagesPlugin() {
   return new CopyWebpackPlugin([
     {from: path.resolve(projectPaths.SOURCE_DIRECTORY, 'img'), to: 'img'},
   ]);
