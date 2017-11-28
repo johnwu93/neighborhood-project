@@ -7,21 +7,15 @@ const merge = require('webpack-merge');
 
 const projectPaths = require('./webpack.project.paths');
 const base = require('./webpack.base');
-const styles = require('./webpack.styles');
 const util = require('./util');
 
 
-const TRANSPILED_CSS = 'styles.css';
-
 // noinspection JSUnresolvedFunction
 module.exports = merge(
-  styles.generateProdScssModuleRule(TRANSPILED_CSS),
+  // to include scss, uncomment the next line;
+  // generateDevScssModuleRule('styles.css'),
   base.BASE_CONFIG,
   util.includeAssetPlugins(),
-  util.includeVendors(
-    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/animate.css/animate.min.css'),
-    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/bootstrap/dist/css/bootstrap.min.css'),
-  ),
   {
     output: {
       path: projectPaths.PROD_DIRECTORY,
