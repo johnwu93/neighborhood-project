@@ -19,7 +19,7 @@
     <envs />
   </TaskOptions>
   <TaskOptions>
-    <option name="arguments" value="" />
+    <option name="arguments" value="--config $ContentRoot$/tasks/webpack/webpack.javascript.file.watcher.js" />
     <option name="checkSyntaxErrors" value="true" />
     <option name="description" />
     <option name="exitCodeBehavior" value="ERROR" />
@@ -32,7 +32,7 @@
     </option>
     <option name="outputFromStdout" value="false" />
     <option name="program" value="/Users/johnwu/code/udacity-starter-code/node_modules/.bin/webpack" />
-    <option name="scopeName" value="source" />
+    <option name="scopeName" value="Src Code" />
     <option name="trackOnlyRoot" value="false" />
     <option name="workingDir" value="$ContentRoot$" />
     <envs />
