@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const gulp = require('gulp');
 const webpack = require('webpack');
-const webpackConfig = require('../../webpack.config.js');
+const webpackConfig = require('../../webpack/webpack.javascript.file.watcher');
 
 gulp.task('scripts', callback =>
   webpack(webpackConfig, (err, stats) => {
@@ -13,5 +13,4 @@ gulp.task('scripts', callback =>
     // eslint-disable-next-line no-console
     console.log(stats.toString());
     callback();
-  })
-);
+  }));

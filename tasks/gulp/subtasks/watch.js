@@ -16,8 +16,8 @@ const initializeBrowser = function initializeBrowser() {
   browserSync.init({
     notify: false,
     server: {
-      baseDir: '.'
-    }
+      baseDir: '.',
+    },
   });
 };
 
@@ -42,10 +42,11 @@ gulp.task('watch:js', () => {
   });
 });
 
-gulp.task('cssInject', () =>
-  gulp.src(stylesBuildFilePath)
-    .pipe(browserSync.stream())
-);
+gulp.task('cssInject', () => {
+  gulp
+    .src(stylesBuildFilePath)
+    .pipe(browserSync.stream());
+});
 
 gulp.task('scriptsRefresh', ['scripts'], () => {
   browserSync.reload();

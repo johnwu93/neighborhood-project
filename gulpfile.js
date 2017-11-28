@@ -1,7 +1,7 @@
-require('./gulp/tasks/lint');
-require('./gulp/tasks/styles');
-require('./gulp/tasks/scripts');
-require('./gulp/tasks/watch');
+require('./tasks/gulp/subtasks/lint');
+require('./tasks/gulp/subtasks/styles');
+require('./tasks/gulp/subtasks/scripts');
+require('./tasks/gulp/subtasks/watch');
 
 const gulp = require('gulp');
 
