@@ -1,6 +1,6 @@
 import { assertRejectedPromise, assertResolvedPromise } from '../../../assertutil';
 import BusinessInfoScraper from '../../../../src/scripts/scraper/foursquare/businessinfoscraper';
-import MARU_COFFEE_ID from '../../../maru';
+import { assertAddress, assertRating, MARU_COFFEE_ID } from '../../../maru';
 
 describe('Business Info Scraper', () => {
   describe('Nonexisting shop', () => {
@@ -18,18 +18,11 @@ describe('Business Info Scraper', () => {
     });
 
     it('should successfully obtain a rating of the shop', function testRating(done) {
-      assertResolvedPromise(this.businessScraper.fetchRating(), done, (scrapedRating) => {
-        const expectedRating = 8.0;
-        expect(scrapedRating).toBeGreaterThan(expectedRating,
-          `Coffee shop should have a rating more than ${expectedRating}`,
-        );
-      });
+      assertResolvedPromise(this.businessScraper.fetchRating(), done, assertRating);
     });
 
     it('should successfully obtain the address of a shop', function testAddress(done) {
-      assertResolvedPromise(this.businessScraper.fetchAddress(), done, (scrapedAddress) => {
-        expect(scrapedAddress).toEqual('1936 Hillhurst Ave, Los Angeles CA, 90027');
-      });
+      assertResolvedPromise(this.businessScraper.fetchAddress(), done, assertAddress);
     });
   });
 });

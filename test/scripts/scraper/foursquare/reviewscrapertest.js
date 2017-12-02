@@ -1,6 +1,6 @@
 import { assertRejectedPromise, assertResolvedPromise } from '../../../assertutil';
-import MARU_COFFEE_ID from '../../../maru';
 import ReviewScraper from '../../../../src/scripts/scraper/foursquare/reviewscraper';
+import { assertReview, MARU_COFFEE_ID } from '../../../maru';
 
 describe('Review Scraper', () => {
   describe('Nonexisting shop', () => {
@@ -18,10 +18,7 @@ describe('Review Scraper', () => {
     });
 
     it('should successfully obtain a review of a shop', function testReview(done) {
-      assertResolvedPromise(this.businessScraper.fetch(), done, (scrapedReview) => {
-        expect(scrapedReview.text).toBeNonEmptyString();
-        expect(scrapedReview.url).toBeNonEmptyString();
-      });
+      assertResolvedPromise(this.businessScraper.fetch(), done, assertReview);
     });
   });
 

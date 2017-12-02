@@ -23,7 +23,7 @@ export default class BusinessInfoScraper {
     this.businessId = businessId;
   }
 
-  retrieveResponse() {
+  retrieveResponse(): Promise<Venue> {
     const query = computeUrlQuery(
       `https://api.foursquare.com/v2/venues/${this.businessId}`,
     );

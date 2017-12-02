@@ -16,7 +16,8 @@
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
     "jquery": "^3.2.1",
-    "popper.js": "^1.12.5"
+    "popper.js": "^1.12.5",
+    "promise-branch": "^1.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
