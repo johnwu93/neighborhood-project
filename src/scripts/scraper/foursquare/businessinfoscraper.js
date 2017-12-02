@@ -15,6 +15,10 @@ type Venue = {
   location: Location,
 }
 
+type WrappedVenue = {
+  venue: Venue,
+}
+
 export default class BusinessInfoScraper {
   businessId: number;
   jsonPromise: Promise<Venue>; // todo use union rather than any
@@ -27,7 +31,8 @@ export default class BusinessInfoScraper {
     const query = computeUrlQuery(
       `https://api.foursquare.com/v2/venues/${this.businessId}`,
     );
-    this.jsonPromise = retrieveJsonData(fetch(query))
+    const promise: Promise<WrappedVenue> = retrieveJsonData(fetch(query));
+    this.jsonPromise = promise
       .then(({venue}) => venue);
     return this.jsonPromise;
   }
@@ -38,8 +43,10 @@ export default class BusinessInfoScraper {
 
   fetchAddress(): Promise<string> {
     return this.jsonPromise
-      .then(({location}) => location)
-      .then(({address, city, state, postalCode}) => `${address}, ${city} ${state}, ${postalCode}`);
+      .then(({location}) => {
+        const {address, city, state, postalCode} = location;
+        return `${address}, ${city} ${state}, ${postalCode}`;
+      });
   }
 }
 

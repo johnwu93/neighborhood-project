@@ -3,9 +3,29 @@
 import { computeUrlQuery, retrieveJsonData } from '../util';
 import Review from '../../entities/review';
 
+type Tip = {
+  text: string,
+  canonicalUrl: string,
+}
+
+type WrappedTips = {
+  tips: {
+    items: Array<Tip>
+  }
+}
+
+const unwrapTips = function unwrapTips(jsonTips: WrappedTips): Array<Tip> {
+  return jsonTips.tips.items;
+};
+
+
+const convertToReview = function convertToReview(tip: Tip): Review {
+  return new Review(tip.text, tip.canonicalUrl);
+};
+
 export default class ReviewScraper {
   businessId: number;
-  promise: Promise<any>;
+  promise: Promise<WrappedTips>;
 
   constructor(businessId: number) {
     this.businessId = businessId;
@@ -25,13 +45,11 @@ export default class ReviewScraper {
     return this.promise;
   }
 
-  fetch(): Promise<null | Review> {
+  fetch(): Promise<?Review> {
     return this.promise
-      .then(({tips}) => tips.items)
+      .then(unwrapTips)
       .then(
-        items => (items.length === 0 ? Promise.reject('No reviews could be found') : items[0]),
-        () => null,
-      )
-      .then(tip => (tip === null ? null : new Review(tip.text, tip.canonicalUrl)));
+        items => (items.length === 0 ? null : convertToReview(items[0])),
+      );
   }
 }

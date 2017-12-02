@@ -33,9 +33,8 @@ describe('Review Scraper', () => {
     });
 
     it('should return null if a business has no reviews', function testNull(done) {
-      this.businessScraper.retrieveResponse();
-      assertResolvedPromise(this.businessScraper.fetch(), done, (text) => {
-        expect(text).toBe(null);
+      assertResolvedPromise(this.businessScraper.fetch(), done, (review) => {
+        expect(review).toBe(null);
       });
     });
   });

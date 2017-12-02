@@ -3,6 +3,10 @@
 const CLIENT_ID = 'Q5EBLBEVOFI0BETNIWXPZATZWTQJ2KDBGEKXMTOF3XFLZDQ0';
 const CLIENT_SECRET = '4ICZPHHXFVL3KV1HR22IFVJVDFQRMVS0NWL4JYPH33YXRQUT';
 
+type WrappedResponse<Value> = {
+  response: Value
+}
+
 const dateToYMD = function dateToYMD(date) {
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -30,20 +34,25 @@ const computeUrlQuery = function computeUrlQuery(
   return urlQuery;
 };
 
-const confirmStatus = function confirmStatus(response) {
+function strictJsonTyping<Value>(value: any): WrappedResponse<Value> {
+  return value;
+}
+
+function confirmStatus(response: Response): Promise<any> {
+  // if it was successful, then get the json from the response
   if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response);
+    return response.json();
   }
   return Promise.reject(new Error(response.statusText));
-};
+}
 
 
-const retrieveJsonData = function retrieveJsonData(promise: Promise<any>): Promise<any> {
+function retrieveJsonData<Value>(promise: Promise<Response>): Promise<Value> {
   return promise
     .then(confirmStatus)
-    .then(response => response.json())
+    .then(strictJsonTyping)
     .then(({response}) => response);
-};
+}
 
 
 export { computeUrlQuery, retrieveJsonData };
