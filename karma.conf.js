@@ -3,7 +3,7 @@
 const merge = require('webpack-merge');
 const babelConfig = require('./tasks/webpack/webpack.babel.js');
 
-module.exports = function configSettings(config) {
+module.exports = function exports(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -12,7 +12,7 @@ module.exports = function configSettings(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'jasmine-matchers'],
 
 
     // list of files / patterns to load in the browser
@@ -61,7 +61,7 @@ module.exports = function configSettings(config) {
 
 
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeCanary'],
 
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,

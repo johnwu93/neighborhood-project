@@ -40,7 +40,6 @@
       }
     ],
     "prefer-object-spread/prefer-object-spread": 2,
-    "filenames/match-exported": [ 2, "kebab" ],
     "filenames/match-regex": [2, "^[a-z\\.]+$", true],
     "filenames/no-index": 2,
     "dollar-sign/dollar-sign": [2, "ignoreProperties"]
