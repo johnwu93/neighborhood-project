@@ -1,9 +1,9 @@
-import { retrieveJsonData } from '../src/scripts/scraper/util';
-import { assertRejectedPromise, assertResolvedPromise } from './assertutil';
-import Business from '../src/scripts/entities/business';
-import FourSquareScraper from '../src/scripts/scraper/foursquarescraper';
-import { assertAddress, assertRating, assertReview, MARU_COFFEE_ID } from './maru';
-import * as businessinfoscrapermodule from '../src/scripts/scraper/foursquare/businessinfoscraper';
+import { retrieveJsonData } from '../../../src/scripts/scraper/util';
+import { assertRejectedPromise, assertResolvedPromise } from '../../assertutil';
+import Business from '../../../src/scripts/entities/business';
+import FourSquareScraper from '../../../src/scripts/scraper/foursquarescraper';
+import { assertAddress, assertRating, assertReview, MARU_COFFEE_ID } from '../../maru';
+import * as businessinfoscrapermodule from '../../../src/scripts/scraper/foursquare/businessinfoscraper';
 
 describe('Four Square Scraper', () => {
   it('should be fail to to retrieve json data if request was unsuccessful', (done) => {
