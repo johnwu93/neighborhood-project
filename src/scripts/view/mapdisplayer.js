@@ -3,26 +3,32 @@ import GPSCoordinates from '../entities/gpscoordinates';
 const MARU_COFFE_COORD = new GPSCoordinates(34.106572477771984, -118.28735127154621);
 
 export default class MapDisplayer {
-  constructor(google) {
-    this.google = google;
+  /**
+   * @param {GoogleMapFactory} googleMapFactory
+   */
+  constructor(googleMapFactory) {
+    this.googleMapFactory = googleMapFactory;
+  }
+
+  setMap() {
+    this.map = this.googleMapFactory.createMap(MARU_COFFE_COORD, 13);
   }
 
   /**
    *
-   * @param {Array<Business>}businesses
+   * @param {google.maps.Marker} marker
    */
-  plotPlaces(businesses) {
-    const map = new this.google.maps.Map(document.getElementById('map'), {
-      center: MARU_COFFE_COORD,
-      zoom: 13,
-    });
-    businesses.forEach((business) => {
-      const {lat, lng} = business.coords;
-      return new this.google.maps.Marker({
-        position: {lat, lng},
-        map,
-        title: 'First Marker!',
-      });
-    });
+  showMarker(marker) {
+    marker.setMap(this.map);
+  }
+
+  /**
+   *
+   * @param {google.maps.Marker} marker
+   * @param {google.maps.InfoWindow} infoWindow
+   */
+  displayInfoWindow(marker, infoWindow) {
+    // Look at the current info window
+    infoWindow.open(this.map, marker);
   }
 }
