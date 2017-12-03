@@ -1,6 +1,6 @@
-import GeoData from './geodata';
+import GPSCoordinates from '../entities/gpscoordinates';
 
-const MARU_COFFE = new GeoData('Maru Coffe', 34.106572477771984, -118.28735127154621);
+const MARU_COFFE_COORD = new GPSCoordinates(34.106572477771984, -118.28735127154621);
 
 export default class MapDisplayer {
   constructor(google) {
@@ -9,17 +9,20 @@ export default class MapDisplayer {
 
   /**
    *
-   * @param {Array<GeoData>}businesses
+   * @param {Array<Business>}businesses
    */
   plotPlaces(businesses) {
     const map = new this.google.maps.Map(document.getElementById('map'), {
-      center: {lat: MARU_COFFE.lat, lng: MARU_COFFE.long},
+      center: MARU_COFFE_COORD,
       zoom: 13,
     });
-    businesses.forEach(business => new this.google.maps.Marker({
-      position: {lat: business.lat, lng: business.long},
-      map,
-      title: 'First Marker!',
-    }));
+    businesses.forEach((business) => {
+      const {lat, lng} = business.coords;
+      return new this.google.maps.Marker({
+        position: {lat, lng},
+        map,
+        title: 'First Marker!',
+      });
+    });
   }
 }
