@@ -14,7 +14,9 @@
   "author": "John Wu",
   "license": "ISC",
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "bootstrap": "^4.0.0-beta",
+    "google-maps": "^3.2.1",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "promise-branch": "^1.2.1"

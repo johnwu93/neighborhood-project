@@ -32,12 +32,6 @@ module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
 };
 
 
-const includeImagesPlugin = function includeImagesPlugin() {
-  return new CopyWebpackPlugin([
-    {from: path.resolve(projectPaths.SOURCE_DIRECTORY, 'img'), to: 'img'},
-  ]);
-};
-
 const includeHTMLPlugin = function includeHTMLPlugin() {
   return new HtmlWebpackPlugin({
     filename: 'index.html',
@@ -48,7 +42,6 @@ const includeHTMLPlugin = function includeHTMLPlugin() {
 module.exports.includeAssetPlugins = function includeAssetPlugins() {
   return {
     plugins: [
-      includeImagesPlugin(),
       includeHTMLPlugin(),
     ],
   };
