@@ -1,6 +1,6 @@
 import { assertRejectedPromise, assertResolvedPromise } from '../../../assertutil';
 import BusinessInfoScraper from '../../../../src/scripts/scraper/foursquare/businessinfoscraper';
-import { assertAddress, assertRating, MARU_COFFEE_ID } from '../../../maru';
+import { assertAddress, assertCoordinates, assertRating, MARU_COFFEE_ID } from '../../../maru';
 
 describe('Business Info Scraper', () => {
   describe('Nonexisting shop', () => {
@@ -23,6 +23,10 @@ describe('Business Info Scraper', () => {
 
     it('should successfully obtain the address of a shop', function testAddress(done) {
       assertResolvedPromise(this.businessScraper.fetchAddress(), done, assertAddress);
+    });
+
+    it('should successfully obtain the lat/lng of a shop', function testGPSCoordinates(done) {
+      assertResolvedPromise(this.businessScraper.fetchCoordinates(), done, assertCoordinates);
     });
   });
 });

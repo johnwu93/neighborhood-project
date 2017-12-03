@@ -2,7 +2,13 @@ import { retrieveJsonData } from '../../../src/scripts/scraper/util';
 import { assertRejectedPromise, assertResolvedPromise } from '../../assertutil';
 import Business from '../../../src/scripts/entities/business';
 import FourSquareScraper from '../../../src/scripts/scraper/foursquarescraper';
-import { assertAddress, assertRating, assertReview, MARU_COFFEE_ID } from '../../maru';
+import {
+  assertAddress,
+  assertCoordinates,
+  assertRating,
+  assertReview,
+  MARU_COFFEE_ID,
+} from '../../maru';
 import * as businessinfoscrapermodule from '../../../src/scripts/scraper/foursquare/businessinfoscraper';
 
 describe('Four Square Scraper', () => {
@@ -31,6 +37,7 @@ describe('Four Square Scraper', () => {
 
     it('should scrape successfully', function testFetch(done) {
       assertResolvedPromise(this.scraper.fetch(), done, (scrapedInfo) => {
+        assertCoordinates(scrapedInfo.coords);
         assertRating(scrapedInfo.rating);
         assertAddress(scrapedInfo.address);
         assertReview(scrapedInfo.review);
@@ -41,6 +48,7 @@ describe('Four Square Scraper', () => {
       // hack: This would mock BusinessInfoScraper
       spyOn(businessinfoscrapermodule.default.prototype, 'retrieveResponse').and.returnValue(Promise.reject('Could not retrieve data of business'));
       assertResolvedPromise(this.scraper.fetch(), done, (scrapedInfo) => {
+        expect(scrapedInfo.coords).toBeNull();
         expect(scrapedInfo.rating).toBeNull();
         expect(scrapedInfo.address).toBeNull();
         assertReview(scrapedInfo.review);

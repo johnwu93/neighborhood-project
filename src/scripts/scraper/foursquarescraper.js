@@ -5,7 +5,7 @@ import branch from 'promise-branch';
 import Business from '../entities/business';
 import { computeUrlQuery, retrieveJsonData } from './util';
 
-import type { Venue } from './foursquare/businessinfoscraper';
+import type { GPSCoordinates, Venue } from './foursquare/businessinfoscraper';
 import BusinessInfoScraper from './foursquare/businessinfoscraper';
 import ReviewScraper from './foursquare/reviewscraper';
 import Review from '../entities/review';
@@ -13,12 +13,14 @@ import Review from '../entities/review';
 type ScrapedBusinessInfo = {
   rating: ?number,
   address: ?string,
+  coords: ?GPSCoordinates,
 }
 
 type ScrapedResult = {
   rating: ?number,
   address: ?string,
   review: ?Review,
+  coords: ?GPSCoordinates,
 }
 
 
@@ -30,9 +32,9 @@ const fetchBusinessInfo =
   function fetchBusinessInfo(scraper: BusinessInfoScraper): Promise<ScrapedBusinessInfo> {
     return branch(scraper.retrieveResponse(),
       () => Promise
-        .all([scraper.fetchRating(), scraper.fetchAddress()])
-        .then(([rating, address]) => ({rating, address})),
-      () => ({rating: null, address: null}),
+        .all([scraper.fetchRating(), scraper.fetchAddress(), scraper.fetchCoordinates()])
+        .then(([rating, address, coords]) => ({rating, address, coords})),
+      () => ({rating: null, address: null, coords: null}),
     );
   };
 

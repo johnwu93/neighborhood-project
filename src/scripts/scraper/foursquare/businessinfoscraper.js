@@ -6,7 +6,9 @@ type Location = {
   address: string,
   state: string,
   city: string,
-  postalCode: number
+  postalCode: number,
+  lat: number,
+  lng: number,
 }
 
 type Venue = {
@@ -17,6 +19,11 @@ type Venue = {
 
 type WrappedVenue = {
   venue: Venue,
+}
+
+type GPSCoordinates = {
+  lat: number,
+  lng: number,
 }
 
 export default class BusinessInfoScraper {
@@ -48,6 +55,14 @@ export default class BusinessInfoScraper {
         return `${address}, ${city} ${state}, ${postalCode}`;
       });
   }
+
+  fetchCoordinates(): Promise<GPSCoordinates> {
+    return this.jsonPromise
+      .then(({location}) => {
+        const {lat, lng} = location;
+        return {lat, lng};
+      });
+  }
 }
 
-export type { Venue };
+export type { Venue, GPSCoordinates };
