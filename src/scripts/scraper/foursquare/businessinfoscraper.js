@@ -1,6 +1,7 @@
 // @flow
 
 import { computeUrlQuery, retrieveJsonData } from '../util';
+import GPSCoordinates from '../../entities/gpscoordinates';
 
 type Location = {
   address: string,
@@ -19,11 +20,6 @@ type Venue = {
 
 type WrappedVenue = {
   venue: Venue,
-}
-
-type GPSCoordinates = {
-  lat: number,
-  lng: number,
 }
 
 export default class BusinessInfoScraper {
@@ -60,7 +56,7 @@ export default class BusinessInfoScraper {
     return this.jsonPromise
       .then(({location}) => {
         const {lat, lng} = location;
-        return {lat, lng};
+        return new GPSCoordinates(lat, lng);
       });
   }
 }

@@ -2,7 +2,7 @@
 // $FlowFixMe
 import branch from 'promise-branch';
 
-import Business from '../entities/business';
+import BusinessSearchQuery from '../entities/businesssearchquery';
 import { computeUrlQuery, retrieveJsonData } from './util';
 
 import type { GPSCoordinates, Venue } from './foursquare/businessinfoscraper';
@@ -48,10 +48,10 @@ const fetchReview = function fetchReview(scraper: ReviewScraper): Promise<{ revi
 };
 
 export default class FourSquareScraper {
-  business: Business;
+  business: BusinessSearchQuery;
   promise: Promise<any>;
 
-  constructor(business: Business) {
+  constructor(business: BusinessSearchQuery) {
     this.business = business;
   }
 

@@ -1,6 +1,5 @@
 import { retrieveJsonData } from '../../../src/scripts/scraper/util';
 import { assertRejectedPromise, assertResolvedPromise } from '../../assertutil';
-import Business from '../../../src/scripts/entities/business';
 import FourSquareScraper from '../../../src/scripts/scraper/foursquarescraper';
 import {
   assertAddress,
@@ -10,6 +9,7 @@ import {
   MARU_COFFEE_ID,
 } from '../../maru';
 import * as businessinfoscrapermodule from '../../../src/scripts/scraper/foursquare/businessinfoscraper';
+import BusinessSearchQuery from '../../../src/scripts/entities/businesssearchquery';
 
 describe('Four Square Scraper', () => {
   it('should be fail to to retrieve json data if request was unsuccessful', (done) => {
@@ -17,14 +17,14 @@ describe('Four Square Scraper', () => {
   });
 
   it('should have trouble connecting to retrieving data if nothing is inputted', (done) => {
-    const business = new Business('abcd Fake Street', 'Fake Street');
+    const business = new BusinessSearchQuery('abcd Fake Street', 'Fake Street');
     const scraper = new FourSquareScraper(business);
     assertRejectedPromise(scraper.retrieveResponse(), done);
   });
 
   describe('Scraping Maru Coffee', () => {
     beforeAll(function setupMaruCoffeeScraper() {
-      this.business = new Business('Maru Coffee', 'Los Angeles, CA');
+      this.business = new BusinessSearchQuery('Maru Coffee');
       this.scraper = new FourSquareScraper(this.business);
       this.scraper.retrieveResponse();
     });
