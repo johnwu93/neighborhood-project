@@ -7,7 +7,9 @@ export default class InfoWindowViewModel {
   constructor(infoWindowView, currentBusinessMarker) {
     // registers event for InfoWindow
     this.infoMarkerView = infoWindowView;
+    this.currentBusinessMarker = currentBusinessMarker;
     currentBusinessMarker.subscribe(this.update.bind(this));
+    infoWindowView.onClose(this.deselectBusinessMarker.bind(this));
   }
 
   /**
@@ -16,5 +18,9 @@ export default class InfoWindowViewModel {
    */
   update(targetedBusinessMarker) {
     this.infoMarkerView.display(targetedBusinessMarker);
+  }
+
+  deselectBusinessMarker() {
+    this.currentBusinessMarker(null);
   }
 }

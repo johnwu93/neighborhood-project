@@ -11,6 +11,14 @@ export default class InfoWindowView {
     this.mapDisplayer = mapDisplayer;
   }
 
+  /**
+   * @param {Function} closingInfoWindowCallBack
+   */
+  onClose(closingInfoWindowCallBack) {
+    // when this window closes in the UI, an event will be triggered
+    this.googleInfoWindow.addListener('closeclick', closingInfoWindowCallBack);
+  }
+
   close() {
     this.googleInfoWindow.marker = null;
   }
@@ -21,7 +29,9 @@ export default class InfoWindowView {
    */
   display(businessMarker) {
     this.close();
-    this.googleInfoWindow.setContent(generateInfoWindowTemplate(businessMarker.business));
-    this.mapDisplayer.displayInfoWindow(businessMarker.marker, this.googleInfoWindow);
+    if (businessMarker) {
+      this.googleInfoWindow.setContent(generateInfoWindowTemplate(businessMarker.business));
+      this.mapDisplayer.displayInfoWindow(businessMarker.marker, this.googleInfoWindow);
+    }
   }
 }
