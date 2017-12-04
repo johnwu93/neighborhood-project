@@ -67,9 +67,12 @@
     "node-sass": "^4.7.2",
     "node-sass-import-once": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.16",
+    "pug": "^2.0.0-rc.4",
+    "pug-cli": "^1.0.0-alpha6",
+    "pug-loader": "^2.3.0",
     "sass-loader": "^6.0.6",
     "stylelint": "^8.1.1",
-    "webpack": "^3.6.0",
+    "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.1"
   }

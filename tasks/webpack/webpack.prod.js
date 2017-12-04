@@ -15,7 +15,7 @@ module.exports = merge(
   // to include scss, uncomment the next line;
   // generateDevScssModuleRule('styles.css'),
   base.BASE_CONFIG,
-  util.includeAssetPlugins(),
+  util.includeConvertedPugPlugin(),
   {
     output: {
       path: projectPaths.PROD_DIRECTORY,

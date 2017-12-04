@@ -39,6 +39,16 @@ const includeHTMLPlugin = function includeHTMLPlugin() {
   });
 };
 
+module.exports.includeConvertedPugPlugin = function includeConvertedPugPlugin() {
+  return {
+    plugins: [new HtmlWebpackPlugin({
+      // For details on `!!` see https://webpack.github.io/docs/loaders.html#loader-order
+      filename: 'index.html',
+      template: `!!pug-loader!${path.resolve(projectPaths.SOURCE_DIRECTORY, 'templates/index.pug')}`,
+    })],
+  };
+};
+
 module.exports.includeAssetPlugins = function includeAssetPlugins() {
   return {
     plugins: [

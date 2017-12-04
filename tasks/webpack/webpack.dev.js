@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const styles = require('./webpack.styles');
 const merge = require('webpack-merge');
 
 const projectPaths = require('./webpack.project.paths');
@@ -8,9 +9,9 @@ const util = require('./util');
 
 module.exports = merge(
   // to include scss, uncomment the next line
-  // generateDevScssModuleRule('styles.css'),
+  styles.generateDevScssModuleRule('styles.css'),
   base.BASE_CONFIG,
-  util.includeAssetPlugins(),
+  util.includeConvertedPugPlugin(),
   {
     devServer: {
       contentBase: projectPaths.DEV_DIRECTORY,
