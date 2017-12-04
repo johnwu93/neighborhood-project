@@ -1,6 +1,6 @@
 import generateInfoWindowTemplate from './generateinfowindowtemplate';
 
-export default class InfoWindow {
+export default class InfoWindowView {
   /**
    *
    * @param {MapDisplayer} mapDisplayer

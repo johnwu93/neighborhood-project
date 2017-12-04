@@ -18,6 +18,7 @@
     "bootstrap": "^4.0.0-beta",
     "google-maps": "^3.2.1",
     "jquery": "^3.2.1",
+    "knockout": "^3.4.2",
     "popper.js": "^1.12.5",
     "promise-branch": "^1.2.1"
   },

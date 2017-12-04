@@ -1,66 +1,69 @@
+import ko from 'knockout';
+import BusinessMarker from './businessmarker';
+import MarkerViewModel from './markerviewmodel';
+import InfoWindowView from '../view/infowindowview';
+import InfoWindowViewModel from './infowindowviewmodel';
+import MapDisplayer from '../view/mapdisplayer';
+
 /**
  * @description controls the state of the project and wraps abouts around bindins
+ * @property {KnockoutObservable<BusinessMarker>} selectedBusinessMarker
+ * @property {Array<BusinessMarker>} businessMarkers
  */
-import BusinessMarker from './businessmarker';
-
-/**
- *
- * @param {Business} thisBusiness
- * @param {Business} thatBusiness
- */
-const isEqualBusinesses = function isEqualBusinesses(thisBusiness, thatBusiness) {
-  return thisBusiness.name === thatBusiness.name && thisBusiness.address === thatBusiness.address;
-};
-
 export default class NeighborhoodManager {
   /**
-   * @callback markerCreatorCallback
-   * @param {GPSCoordinates}
-   * @return {google.maps.Marker}
-   */
-
-  /**
-   * @callback markerClickCallback
-   * @param {BusinessMarker}
-   */
-
-
-  /**
-   *
    * @param {Array<Business>} businesses
-   * @param {markerCreatorCallback} markerCreatorTask
-   * @param {InfoWindow} infoWindow
+   * @param {GoogleMapFactory} googleMapFactory
+   * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */
-  constructor(businesses, markerCreatorTask, infoWindow) {
-    this.selectedBusinessMarker = null;
-    this.businessMarkers = businesses.map(business =>
-      new BusinessMarker(business, markerCreatorTask(business.coords)),
-    );
-    this.googleInfoWindow = infoWindow;
-  }
-
-  setSelectedBusiness(newBusinessMarker) {
-    if (
-      this.selectedBusinessMarker === null ||
-      !isEqualBusinesses(this.selectedBusinessMarker.business, newBusinessMarker.business)
-    ) {
-      this.selectedBusinessMarker = newBusinessMarker;
-      this.googleInfoWindow.display(newBusinessMarker);
-    }
+  constructor(businesses, googleMapFactory) {
+    this.selectedBusinessMarker = ko.observable();
+    this.googleMapFactory = googleMapFactory;
+    this.businesses = businesses;
   }
 
   /**
-   *
-   * @param {markerClickCallback} markerClickCallback
+   * @describe creates the binds and the necessary bindings to display map
+   * @property {Array<BusinessMarker>} businessMarkers
    */
-  setMarkerClickCallback(markerClickCallback) {
-    this.markerClickCallback = markerClickCallback;
-  }
+  setup() {
+    // const googleMapFactory = new GoogleMapFactory(google);
+    // const mapDisplayer = new MapDisplayer(googleMapFactory);
+    // mapDisplayer.setMap();
+    // const businesses = createRestaurants();
+    //
+    // const neighborhoodManager = new NeighborhoodManager(
+    //   businesses,
+    //   googleMapFactory.createMarker,
+    //   new InfoWindow(mapDisplayer, googleMapFactory.createInfoWindow('')),
+    // );
+    //
+    // neighborhoodManager.businessMarkers.forEach(({marker}) => mapDisplayer.showMarker(marker));
+    // neighborhoodManager.setMarkerClickCallback(
+    //   neighborhoodManager.setSelectedBusiness.bind(neighborhoodManager),
+    // );
+    //
+    // neighborhoodManager.setBindings();
 
-  setBindings() {
-    this.businessMarkers.forEach((businessMarker) => {
-      // the context for markerClickCallback may change
-      businessMarker.marker.addListener('click', () => this.markerClickCallback(businessMarker));
+
+    const mapDisplayer = new MapDisplayer(this.googleMapFactory);
+    mapDisplayer.setMap();
+
+    const businessMarkers = this.businesses.map((business) => {
+      const marker = this.googleMapFactory.createMarker(business.coords);
+      mapDisplayer.showMarker(marker);
+      return new BusinessMarker(business, marker);
     });
+    businessMarkers.forEach(businessMarker =>
+      new MarkerViewModel(this.selectedBusinessMarker, businessMarker),
+    );
+
+    const infoWindowView = new InfoWindowView(
+      mapDisplayer,
+      this.googleMapFactory.createInfoWindow('test'),
+    );
+
+    // eslint-disable-next-line no-new
+    new InfoWindowViewModel(infoWindowView, this.selectedBusinessMarker);
   }
 }
