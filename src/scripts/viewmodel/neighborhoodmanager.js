@@ -4,6 +4,7 @@ import MarkerViewModel from './markerviewmodel';
 import InfoWindowView from '../view/infowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
 import MapDisplayer from '../view/mapdisplayer';
+import BusinesssSelectorViewModel from './businessselectorviewmodel';
 
 /**
  * @description controls the state of the project and wraps abouts around bindins
@@ -27,25 +28,6 @@ export default class NeighborhoodManager {
    * @property {Array<BusinessMarker>} businessMarkers
    */
   setup() {
-    // const googleMapFactory = new GoogleMapFactory(google);
-    // const mapDisplayer = new MapDisplayer(googleMapFactory);
-    // mapDisplayer.setMap();
-    // const businesses = createRestaurants();
-    //
-    // const neighborhoodManager = new NeighborhoodManager(
-    //   businesses,
-    //   googleMapFactory.createMarker,
-    //   new InfoWindow(mapDisplayer, googleMapFactory.createInfoWindow('')),
-    // );
-    //
-    // neighborhoodManager.businessMarkers.forEach(({marker}) => mapDisplayer.showMarker(marker));
-    // neighborhoodManager.setMarkerClickCallback(
-    //   neighborhoodManager.setSelectedBusiness.bind(neighborhoodManager),
-    // );
-    //
-    // neighborhoodManager.setBindings();
-
-
     const mapDisplayer = new MapDisplayer(this.googleMapFactory);
     mapDisplayer.setMap();
 
@@ -57,6 +39,14 @@ export default class NeighborhoodManager {
     businessMarkers.forEach(businessMarker =>
       new MarkerViewModel(this.selectedBusinessMarker, businessMarker),
     );
+
+    this.observableBusinessMarkers = ko.observableArray(businessMarkers);
+
+    const observableBusinesses =
+      ko.pureComputed(() => this.observableBusinessMarkers().map(({business}) => business), this);
+
+    const menuSelectorViewModel = new BusinesssSelectorViewModel(observableBusinesses);
+    menuSelectorViewModel.setBindings();
 
     const infoWindowView = new InfoWindowView(
       mapDisplayer,

@@ -1,7 +1,8 @@
 doctype html
-head
-    meta(charset='UFT-8')
-    title Nice Stops in Los Angeles
-body
-    div.map
-
+html(lang="en")
+    head
+        meta(charset='UFT-8')
+        title Nice Stops in Los Angeles
+    body
+        != require('apply-loader!pug-loader!./businessselector.pug')
+        div#map
