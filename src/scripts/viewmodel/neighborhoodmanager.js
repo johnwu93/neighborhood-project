@@ -5,6 +5,7 @@ import InfoWindowView from '../view/infowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
 import MapDisplayer from '../view/mapdisplayer';
 import BusinesssSelectorViewModel from './businessselectorviewmodel';
+import SearchViewModel from './searchviewmodel';
 
 /**
  * @description controls the state of the project and wraps abouts around bindins
@@ -36,16 +37,22 @@ export default class NeighborhoodManager {
       mapDisplayer.showMarker(marker);
       return new BusinessMarker(business, marker);
     });
-    businessMarkers.forEach(businessMarker =>
-      new MarkerViewModel(this.selectedBusinessMarker, businessMarker),
-    );
+
+    businessMarkers.forEach((businessMarker) => {
+      const markerViewModel = new MarkerViewModel(this.selectedBusinessMarker, businessMarker);
+      markerViewModel.setBindings();
+    });
 
     this.observableBusinessMarkers = ko.observableArray(businessMarkers);
 
     const observableBusinesses =
       ko.pureComputed(() => this.observableBusinessMarkers().map(({business}) => business), this);
 
-    const menuSelectorViewModel = new BusinesssSelectorViewModel(observableBusinesses);
+    const searchViewModel = new SearchViewModel(observableBusinesses);
+    searchViewModel.setBindings();
+    const filteredBusinesses = searchViewModel.getFilteredBusiness();
+
+    const menuSelectorViewModel = new BusinesssSelectorViewModel(filteredBusinesses);
     menuSelectorViewModel.setBindings();
 
     const infoWindowView = new InfoWindowView(

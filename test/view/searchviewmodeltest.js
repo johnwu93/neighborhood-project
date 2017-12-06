@@ -14,6 +14,12 @@ describe('SearchViewModel', () => {
     expect(filteredBusiness()).toBeArrayOfSize(this.observableBusinesses().length);
   });
 
+  it('should have filtered list have the original list of businessses when the bindings are initially setup', function testInitialBindings() {
+    this.searchViewModel.setBindings();
+    const filteredBusiness = this.searchViewModel.getFilteredBusiness();
+    expect(filteredBusiness()).toBeArrayOfSize(this.observableBusinesses().length);
+  });
+
   it('should not return any results if no businesss\' name match with the query', function testNoMatches() {
     this.searchViewModel.search('qwertyuiop');
     const filteredBusiness = this.searchViewModel.getFilteredBusiness();

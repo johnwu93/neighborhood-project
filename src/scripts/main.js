@@ -1,5 +1,5 @@
 import GoogleMapsLoader from 'google-maps';
-import createRestaurants from './view/restaurants';
+import { createRestaurants } from './view/restaurants';
 import GoogleMapFactory from './view/googlemapfactory';
 import NeighborhoodManager from './viewmodel/neighborhoodmanager';
 

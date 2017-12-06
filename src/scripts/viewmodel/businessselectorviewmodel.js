@@ -10,6 +10,6 @@ export default class BusinessSelectorViewModel {
   }
 
   setBindings() {
-    ko.applyBindings({businesses: this.businesses});
+    ko.applyBindings({businesses: this.businesses}, document.getElementById('businesses'));
   }
 }

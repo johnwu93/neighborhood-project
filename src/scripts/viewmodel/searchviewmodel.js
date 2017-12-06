@@ -5,11 +5,20 @@ const myFilteredBusinesses = new WeakMap();
 export default class SearchViewModel {
   /**
    *
-   * @param {KnockoutObservableArray<Business>}businesses
+   * @param {KnockoutObservableArray<Business>} businesses
    */
   constructor(businesses) {
     myBusinesses.set(this, businesses);
     myFilteredBusinesses.set(this, ko.observableArray());
+    this.searchQuery = ko.observable();
+  }
+
+  setBindings() {
+    this.searchQuery.subscribe(this.search.bind(this));
+    ko.applyBindings({
+      searchQuery: this.searchQuery,
+    }, document.getElementById('search'));
+    this.searchQuery('');
   }
 
   getFilteredBusiness() {

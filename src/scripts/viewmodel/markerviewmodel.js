@@ -9,7 +9,11 @@ export default class MarkerViewModel {
    */
   constructor(observableSelectedBusinessMarker, businessMarker) {
     this.observableSelectedBusinessMarker = observableSelectedBusinessMarker;
-    businessMarker.marker.addListener('click', this.onClickMarker.bind(this, businessMarker));
+    this.businessMarker = businessMarker;
+  }
+
+  setBindings() {
+    this.businessMarker.marker.addListener('click', this.onClickMarker.bind(this, this.businessMarker));
   }
 
   /**
