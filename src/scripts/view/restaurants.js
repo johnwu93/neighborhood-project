@@ -3,6 +3,7 @@
 import businessFactory from '../entities/businessfactory';
 import Business from '../entities/business';
 
+const THE_THIRSTY_CROW = 'The Thirsty Crow';
 const createRestaurants = function createRestaurants(): Array<Business> {
   const restaurants = [{
     name: 'Fred 62',
@@ -29,7 +30,7 @@ const createRestaurants = function createRestaurants(): Array<Business> {
       url: 'https://foursquare.com/item/4fe8e15ae4b0e28f6619ae58',
     },
   }, {
-    name: 'The Thirsty Crow',
+    name: THE_THIRSTY_CROW,
     rating: 8.6,
     address: '2939 W Sunset Blvd, Los Angeles CA, 90026',
     coords: {
@@ -45,5 +46,5 @@ const createRestaurants = function createRestaurants(): Array<Business> {
   return restaurants.map(businessFactory);
 };
 
-export default createRestaurants;
+export { createRestaurants, THE_THIRSTY_CROW };
 
