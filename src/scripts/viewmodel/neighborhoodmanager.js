@@ -3,10 +3,10 @@ import BusinessMarker from './businessmarker';
 import MarkerViewModel from './markerviewmodel';
 import InfoWindowView from '../view/infowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
-import MapDisplayer from '../view/mapdisplayer';
 import BusinessSelectorViewModel from './businessselectorviewmodel';
 import createBusinessIdPair from './viewmodelfactory';
 import SearchViewModel from './searchviewmodel';
+import MarkerView from '../view/markerview';
 
 /**
  * @description controls the state of the project and wraps abouts around bindins
@@ -30,13 +30,12 @@ export default class NeighborhoodManager {
    * @property {Array<BusinessMarker>} businessMarkers
    */
   setup() {
-    const mapDisplayer = new MapDisplayer(this.googleMapFactory);
-    mapDisplayer.setMap();
+    const map = this.googleMapFactory.createMap();
 
     const businessMarkers = this.businesses.map((business, id) => {
-      const marker = this.googleMapFactory.createMarker(business.coords);
-      mapDisplayer.showMarker(marker);
-      return new BusinessMarker(business, marker, id);
+      const markerView = new MarkerView(map, this.googleMapFactory.createMarker(business.coords));
+      markerView.show();
+      return new BusinessMarker(business, markerView, id);
     });
 
     businessMarkers.forEach((businessMarker) => {
@@ -62,7 +61,7 @@ export default class NeighborhoodManager {
     menuSelectorViewModel.setBindings();
 
     const infoWindowView = new InfoWindowView(
-      mapDisplayer,
+      map,
       this.googleMapFactory.createInfoWindow('test'),
     );
 

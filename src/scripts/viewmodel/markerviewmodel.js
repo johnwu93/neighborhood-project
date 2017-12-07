@@ -13,7 +13,7 @@ export default class MarkerViewModel {
   }
 
   setBindings() {
-    this.businessMarker.marker.addListener('click', this.onClickMarker.bind(this, this.businessMarker));
+    this.businessMarker.marker.onClickListener(this.onClickMarker.bind(this, this.businessMarker));
   }
 
   /**

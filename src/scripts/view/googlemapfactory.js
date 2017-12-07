@@ -1,3 +1,7 @@
+import GPSCoordinates from '../entities/gpscoordinates';
+
+const MARU_COFFE_COORD = new GPSCoordinates(34.106572477771984, -118.28735127154621);
+
 /**
  * @description Convenient methods to call Google Map Objects
  */
@@ -7,14 +11,10 @@ export default class GoogleMapFactory {
     this.google = google;
   }
 
-  /**
-   * @param {GPSCoordinates} center
-   * @param {number} zoom
-   */
-  createMap(center, zoom) {
+  createMap() {
     return new this.google.maps.Map(document.getElementById('map'), {
-      center,
-      zoom,
+      center: MARU_COFFE_COORD,
+      zoom: 15,
     });
   }
 

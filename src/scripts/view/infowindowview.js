@@ -3,19 +3,19 @@ import generateInfoWindowTemplate from './generateinfowindowtemplate';
 export default class InfoWindowView {
   /**
    *
-   * @param {MapDisplayer} mapDisplayer
+   * @param {google.maps.Map} map
    * @param {google.maps.InfoWindow} googleInfoWindow
    */
-  constructor(mapDisplayer, googleInfoWindow) {
+  constructor(map, googleInfoWindow) {
     this.googleInfoWindow = googleInfoWindow;
-    this.mapDisplayer = mapDisplayer;
+    this.map = map;
   }
 
   /**
+   * @description when this window closes in the UI, an event will be triggered
    * @param {Function} closingInfoWindowCallBack
    */
   onClose(closingInfoWindowCallBack) {
-    // when this window closes in the UI, an event will be triggered
     this.googleInfoWindow.addListener('closeclick', closingInfoWindowCallBack);
   }
 
@@ -24,14 +24,13 @@ export default class InfoWindowView {
   }
 
   /**
-   *
    * @param {BusinessMarker}businessMarker
    */
   display(businessMarker) {
     this.close();
     if (businessMarker) {
       this.googleInfoWindow.setContent(generateInfoWindowTemplate(businessMarker.business));
-      this.mapDisplayer.displayInfoWindow(businessMarker.marker, this.googleInfoWindow);
+      this.googleInfoWindow.open(this.map, businessMarker.marker.googleMarker);
     }
   }
 }
