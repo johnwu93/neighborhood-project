@@ -4,7 +4,8 @@ import MarkerViewModel from './markerviewmodel';
 import InfoWindowView from '../view/infowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
 import MapDisplayer from '../view/mapdisplayer';
-import BusinesssSelectorViewModel from './businessselectorviewmodel';
+import BusinessSelectorViewModel from './businessselectorviewmodel';
+import createBusinessIdPair from './viewmodelfactory';
 import SearchViewModel from './searchviewmodel';
 
 /**
@@ -32,10 +33,10 @@ export default class NeighborhoodManager {
     const mapDisplayer = new MapDisplayer(this.googleMapFactory);
     mapDisplayer.setMap();
 
-    const businessMarkers = this.businesses.map((business) => {
+    const businessMarkers = this.businesses.map((business, id) => {
       const marker = this.googleMapFactory.createMarker(business.coords);
       mapDisplayer.showMarker(marker);
-      return new BusinessMarker(business, marker);
+      return new BusinessMarker(business, marker, id);
     });
 
     businessMarkers.forEach((businessMarker) => {
@@ -46,13 +47,18 @@ export default class NeighborhoodManager {
     this.observableBusinessMarkers = ko.observableArray(businessMarkers);
 
     const observableBusinesses =
-      ko.pureComputed(() => this.observableBusinessMarkers().map(({business}) => business), this);
-
+      ko.pureComputed(() => this.observableBusinessMarkers().map(createBusinessIdPair), this);
     const searchViewModel = new SearchViewModel(observableBusinesses);
     searchViewModel.setBindings();
-    const filteredBusinesses = searchViewModel.getFilteredBusiness();
 
-    const menuSelectorViewModel = new BusinesssSelectorViewModel(filteredBusinesses);
+    this.filteredBusinessIds = searchViewModel.getFilteredBusinessIds();
+
+    const filteredBusinesses = ko.pureComputed(
+      () => this.filteredBusinessIds().map(id => this.observableBusinessMarkers()[id].business),
+      this,
+    );
+
+    const menuSelectorViewModel = new BusinessSelectorViewModel(filteredBusinesses);
     menuSelectorViewModel.setBindings();
 
     const infoWindowView = new InfoWindowView(

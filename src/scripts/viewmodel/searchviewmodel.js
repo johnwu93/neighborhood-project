@@ -1,15 +1,15 @@
 import ko from 'knockout';
 
 const myBusinesses = new WeakMap();
-const myFilteredBusinesses = new WeakMap();
+const myFilteredBusinessIds = new WeakMap();
 export default class SearchViewModel {
   /**
    *
-   * @param {KnockoutObservableArray<Business>} businesses
+   * @param {KnockoutObservableArray<{id: number, name: string}>} businesses
    */
   constructor(businesses) {
     myBusinesses.set(this, businesses);
-    myFilteredBusinesses.set(this, ko.observableArray());
+    myFilteredBusinessIds.set(this, ko.observableArray());
     this.searchQuery = ko.observable();
   }
 
@@ -21,8 +21,12 @@ export default class SearchViewModel {
     this.searchQuery('');
   }
 
-  getFilteredBusiness() {
-    return myFilteredBusinesses.get(this);
+  /**
+   *
+   * @return {KnockoutObservableArray<number>}
+   */
+  getFilteredBusinessIds() {
+    return myFilteredBusinessIds.get(this);
   }
 
   /**
@@ -31,8 +35,9 @@ export default class SearchViewModel {
    */
   search(query) {
     const business = myBusinesses.get(this)();
-    const filteredResults = business
-      .filter(({name}) => name.toLowerCase().search(query.toLowerCase()) !== -1);
-    myFilteredBusinesses.get(this)(filteredResults);
+    const filteredBusinessIds = business
+      .filter(({name}) => name.toLowerCase().search(query.toLowerCase()) !== -1)
+      .map(({id}) => id);
+    myFilteredBusinessIds.get(this)(filteredBusinessIds);
   }
 }
