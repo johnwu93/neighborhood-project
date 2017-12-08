@@ -10,6 +10,12 @@
  */
 
 /**
+ * @function
+ * @name MarkerView#close
+ */
+
+
+/**
  * @callback clickCallback
  */
 

@@ -3,14 +3,20 @@
  */
 export default class MarkerMock {
   constructor() {
-    this.marker = false;
+    this.isVisible = false;
     this.clickTask = null;
   }
 
   // IntelliJ bug: could not understand usage of methods from a subclass
   // noinspection JSUnusedGlobalSymbols
   show() {
-    this.marker = true;
+    this.isVisible = true;
+  }
+
+  // IntelliJ bug: could not understand usage of methods from a subclass
+  // noinspection JSUnusedGlobalSymbols
+  close() {
+    this.isVisible = false;
   }
 
   triggerClick() {

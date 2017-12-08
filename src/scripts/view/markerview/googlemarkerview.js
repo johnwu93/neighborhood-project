@@ -16,6 +16,10 @@ export default class GoogleMarkerView {
     this.googleMarker.setMap(this.map);
   }
 
+  close() {
+    this.googleMarker.setMap(null);
+  }
+
   /**
    * @param {clickCallback} clickTask
    */

@@ -3,7 +3,7 @@
  */
 export default class InfoWindowMock {
   constructor() {
-    this.marker = null;
+    this.isVisible = null;
     this.content = null;
   }
 
@@ -14,14 +14,14 @@ export default class InfoWindowMock {
    * @param {string} content
    */
   display(marker, content) {
-    this.marker = marker;
+    this.isVisible = marker;
     this.content = content;
   }
 
   // IntelliJ bug: could not understand usage of methods from a subclass
   // noinspection JSUnusedGlobalSymbols
   close() {
-    this.marker = null;
+    this.isVisible = null;
   }
 
   // IntelliJ bug: could not understand usage of methods from a subclass

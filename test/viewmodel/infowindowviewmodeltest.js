@@ -16,7 +16,7 @@ const infoWriterMock = function infoWriterMock({name, review}) {
  */
 const assertInfoWindow = function assertInfoWindow(infoWindow, maruBusiness, maruMarker) {
   expect(infoWindow.content).toBe(infoWriterMock(maruBusiness));
-  expect(infoWindow.marker).toBe(maruMarker);
+  expect(infoWindow.isVisible).toBe(maruMarker);
 };
 
 /**
@@ -53,7 +53,7 @@ describe('InfoWindowViewModel', () => {
       assertInfoWindow(this.infoWindow, this.maruBusiness, this.maruMarker);
     });
 
-    it('should change the content that the marker is displaying when selecting another business', function testUpdate() {
+    it('should change the content that the isVisible is displaying when selecting another business', function testUpdate() {
       const starbucksBusiness = {name: 'Starbucks Coffee', review: 'This shop sucks'};
       const starbucksMarker = new MarkerMock();
       const starbucksBusinessMarker = new BusinessMarker(starbucksBusiness, starbucksMarker, 2);
@@ -68,7 +68,7 @@ describe('InfoWindowViewModel', () => {
       const infoWindowViewModel = this.createInfoWindowViewModel(this.maruBusinessMarker);
 
       infoWindowViewModel.update(null);
-      expect(this.infoWindow.marker).toBeNull();
+      expect(this.infoWindow.isVisible).toBeNull();
     });
   });
 
