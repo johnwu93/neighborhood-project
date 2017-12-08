@@ -1,4 +1,5 @@
 import ko from 'knockout';
+import _ from 'lodash';
 import BusinessMarker from './businessmarker';
 import MarkerViewModel from './markerviewmodel';
 import GoogleInfoWindowView from '../view/infowindow/googleinfowindowview';
@@ -6,6 +7,7 @@ import InfoWindowViewModel from './infowindowviewmodel';
 import BusinessSelectorViewModel from './businessselectorviewmodel';
 import SearchViewModel from './searchviewmodel';
 import MarkerView from '../view/markerview/googlemarkerview';
+import { MarkerListViewModel } from './markerlistviewmodel';
 
 /**
  *
@@ -39,11 +41,13 @@ export default class NeighborhoodManager {
   setup() {
     const map = this.googleMapFactory.createMap();
 
-    const businessMarkers = this.businesses.map((business, id) => {
-      const markerView = new MarkerView(map, this.googleMapFactory.createMarker(business.coords));
-      markerView.show();
-      return new BusinessMarker(business, markerView, id);
-    });
+    const markers = this.businesses.map(business =>
+      new MarkerView(map, this.googleMapFactory.createMarker(business.coords)),
+    );
+
+    const businessMarkers = _.unzip([this.businesses, markers]).map(
+      ([business, marker], id) => new BusinessMarker(business, marker, id),
+    );
 
     this.selectedBusinessMarker = ko.pureComputed(() => {
       const id = this.selectedBusinessId();
@@ -85,5 +89,13 @@ export default class NeighborhoodManager {
       this.selectedBusinessMarker,
     );
     infoWindowViewModel.setup();
+
+    const filteredMarkers = ko.pureComputed(
+      () => this.filteredBusinessIds().map(id => markers[id]),
+      this,
+    );
+
+    const markerListViewModel = new MarkerListViewModel(markers, filteredMarkers);
+    markerListViewModel.setup();
   }
 }
