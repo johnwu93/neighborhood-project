@@ -1,4 +1,7 @@
-export default class MarkerView {
+/**
+ *  @implements {MarkerView}
+ */
+export default class GoogleMarkerView {
   /**
    * @description Interface representing a Marker in a map
    * @param {google.maps.Map} map
@@ -12,10 +15,6 @@ export default class MarkerView {
   show() {
     this.googleMarker.setMap(this.map);
   }
-
-  /**
-   * @callback clickCallback
-   */
 
   /**
    * @param {clickCallback} clickTask

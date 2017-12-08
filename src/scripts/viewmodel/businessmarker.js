@@ -1,6 +1,6 @@
 // @flow
 import Business from '../entities/business';
-import MarkerView from '../view/markerview';
+import MarkerView from '../view/markerview/googlemarkerview';
 
 export default class BusinessMarker {
   business: Business;

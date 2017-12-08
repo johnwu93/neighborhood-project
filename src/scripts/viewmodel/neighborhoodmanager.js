@@ -1,12 +1,12 @@
 import ko from 'knockout';
 import BusinessMarker from './businessmarker';
 import MarkerViewModel from './markerviewmodel';
-import InfoWindowView from '../view/infowindowview';
+import GoogleInfoWindowView from '../view/infowindow/googleinfowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
 import BusinessSelectorViewModel from './businessselectorviewmodel';
 import createBusinessIdPair from './viewmodelfactory';
 import SearchViewModel from './searchviewmodel';
-import MarkerView from '../view/markerview';
+import MarkerView from '../view/markerview/googlemarkerview';
 
 /**
  * @description controls the state of the project and wraps abouts around bindins
@@ -20,7 +20,7 @@ export default class NeighborhoodManager {
    * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */
   constructor(businesses, googleMapFactory) {
-    this.selectedBusinessMarker = ko.observable();
+    this.selectedBusinessId = ko.observable();
     this.googleMapFactory = googleMapFactory;
     this.businesses = businesses;
   }
@@ -38,8 +38,13 @@ export default class NeighborhoodManager {
       return new BusinessMarker(business, markerView, id);
     });
 
-    businessMarkers.forEach((businessMarker) => {
-      const markerViewModel = new MarkerViewModel(this.selectedBusinessMarker, businessMarker);
+    this.selectedBusinessMarker = ko.pureComputed(() => {
+      const id = this.selectedBusinessId();
+      return businessMarkers[id];
+    }, this);
+
+    businessMarkers.forEach(({id, marker}) => {
+      const markerViewModel = new MarkerViewModel(this.selectedBusinessId, id, marker);
       markerViewModel.setBindings();
     });
 
@@ -60,12 +65,15 @@ export default class NeighborhoodManager {
     const menuSelectorViewModel = new BusinessSelectorViewModel(filteredBusinesses);
     menuSelectorViewModel.setBindings();
 
-    const infoWindowView = new InfoWindowView(
+    const infoWindowView = new GoogleInfoWindowView(
       map,
       this.googleMapFactory.createInfoWindow('test'),
     );
 
-    // eslint-disable-next-line no-new
-    new InfoWindowViewModel(infoWindowView, this.selectedBusinessMarker);
+    const infoWindowViewModel = new InfoWindowViewModel(
+      infoWindowView,
+      this.selectedBusinessMarker,
+    );
+    infoWindowViewModel.setup();
   }
 }

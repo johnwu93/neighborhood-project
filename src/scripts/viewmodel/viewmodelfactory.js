@@ -1,12 +1,10 @@
-
 /**
  *
- * @param {BusinessMarker} businessMarker
+ * @param {string} name
+ * @param {number} id
  * @return {{name: string, id: number}}
  */
-function createBusinessIdPair(businessMarker) {
-  const {business, id} = businessMarker;
-  const {name} = business;
+function createBusinessIdPair(name, id) {
   return {name, id};
 }
 
