@@ -4,10 +4,17 @@ import MarkerViewModel from './markerviewmodel';
 import GoogleInfoWindowView from '../view/infowindow/googleinfowindowview';
 import InfoWindowViewModel from './infowindowviewmodel';
 import BusinessSelectorViewModel from './businessselectorviewmodel';
-import createBusinessIdPair from './viewmodelfactory';
 import SearchViewModel from './searchviewmodel';
 import MarkerView from '../view/markerview/googlemarkerview';
 
+/**
+ *
+ * @param {BusinessMarker} businessMarker
+ */
+const convertNameIdPair = function convertNameIdPair({id, business}) {
+  const {name} = business;
+  return {id, name};
+};
 /**
  * @description controls the state of the project and wraps abouts around bindins
  * @property {KnockoutObservable<BusinessMarker>} selectedBusinessMarker
@@ -50,19 +57,22 @@ export default class NeighborhoodManager {
 
     this.observableBusinessMarkers = ko.observableArray(businessMarkers);
 
-    const observableBusinesses =
-      ko.pureComputed(() => this.observableBusinessMarkers().map(createBusinessIdPair), this);
-    const searchViewModel = new SearchViewModel(observableBusinesses);
+    const observableNameIdPair =
+      ko.pureComputed(() => this.observableBusinessMarkers().map(convertNameIdPair), this);
+    const searchViewModel = new SearchViewModel(observableNameIdPair);
     searchViewModel.setBindings();
 
     this.filteredBusinessIds = searchViewModel.getFilteredBusinessIds();
 
-    const filteredBusinesses = ko.pureComputed(
-      () => this.filteredBusinessIds().map(id => this.observableBusinessMarkers()[id].business),
+    const filteredNameIdPair = ko.pureComputed(
+      () => this.filteredBusinessIds().map(id => observableNameIdPair()[id]),
       this,
     );
 
-    const menuSelectorViewModel = new BusinessSelectorViewModel(filteredBusinesses);
+    const menuSelectorViewModel = new BusinessSelectorViewModel(
+      filteredNameIdPair,
+      this.selectedBusinessId,
+    );
     menuSelectorViewModel.setBindings();
 
     const infoWindowView = new GoogleInfoWindowView(

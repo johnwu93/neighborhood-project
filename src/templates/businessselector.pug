@@ -1,4 +1,4 @@
 section#businesses
     ul(data-bind="foreach: businesses")
         li
-            a(href="#" data-bind="text: name")
+            a(data-bind="text: name, click: $parent.selectBusinessId.bind($data, id), attr: {href: href}")

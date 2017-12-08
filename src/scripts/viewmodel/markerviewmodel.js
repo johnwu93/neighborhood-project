@@ -14,14 +14,14 @@ export default class MarkerViewModel {
   }
 
   setBindings() {
-    this.marker.onClickListener(this.selectBusinessMarker.bind(this, this.businessId));
+    this.marker.onClickListener(this.selectBusinessId.bind(this, this.businessId));
   }
 
   /**
-   * @param {BusinessMarker} businessMarker
+   * @param {number} newBusinessId
    */
-  selectBusinessMarker(businessMarker) {
-    this.observableSelectedBusinessId(businessMarker);
+  selectBusinessId(newBusinessId) {
+    this.observableSelectedBusinessId(newBusinessId);
   }
 }
 
