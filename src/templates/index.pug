@@ -4,6 +4,7 @@ html(lang="en")
         meta(charset='UFT-8')
         title Nice Stops in Los Angeles
     body
-        != require('apply-loader!pug-loader!./search.pug')
-        != require('apply-loader!pug-loader!./businessselector.pug')
-        div#map
+        div.row
+            != require('apply-loader!pug-loader!./sidemenu.pug')
+            div.col.s9
+                section#map
