@@ -17,7 +17,6 @@ export default class InfoWindowViewModel {
     selectedBusinessMarker,
     infoWindowWriter = generateInfoWindowTemplate,
   ) {
-    // registers event for InfoWindow
     this.infoWindowView = infoWindowView;
     this.selectedBusinessMarker = selectedBusinessMarker;
     this.infoWindowWriter = infoWindowWriter;
@@ -25,6 +24,7 @@ export default class InfoWindowViewModel {
 
   setup() {
     this.selectedBusinessMarker.subscribe(this.update.bind(this));
+    this.selectedBusinessMarker.subscribe(this.closeInfoWindow.bind(this));
     this.infoWindowView.onClose(this.deselectBusinessMarker.bind(this));
   }
 
@@ -42,5 +42,11 @@ export default class InfoWindowViewModel {
 
   deselectBusinessMarker() {
     this.selectedBusinessMarker(null);
+  }
+
+  closeInfoWindow(businessMarker) {
+    if (businessMarker === null) {
+      this.infoWindowView.close();
+    }
   }
 }

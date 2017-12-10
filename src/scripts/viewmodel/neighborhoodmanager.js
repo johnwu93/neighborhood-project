@@ -8,6 +8,8 @@ import BusinessSelectorViewModel from './businessselectorviewmodel';
 import SearchViewModel from './searchviewmodel';
 import MarkerView from '../view/markerview/googlemarkerview';
 import { MarkerListViewModel } from './markerlistviewmodel';
+import FilterSelectedBusinessViewModel from './filterselectedbusinessviewmodel';
+import SelectedBusinessViewModel from './selectedbusinessviewmodel';
 
 /**
  *
@@ -29,7 +31,6 @@ export default class NeighborhoodManager {
    * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */
   constructor(businesses, googleMapFactory) {
-    this.selectedBusinessId = ko.observable();
     this.googleMapFactory = googleMapFactory;
     this.businesses = businesses;
   }
@@ -45,17 +46,16 @@ export default class NeighborhoodManager {
       new MarkerView(map, this.googleMapFactory.createMarker(business.coords)),
     );
 
+    // noinspection JSUnresolvedFunction
     const businessMarkers = _.unzip([this.businesses, markers]).map(
       ([business, marker], id) => new BusinessMarker(business, marker, id),
     );
 
-    this.selectedBusinessMarker = ko.pureComputed(() => {
-      const id = this.selectedBusinessId();
-      return businessMarkers[id];
-    }, this);
+    const selectedBusiness = new SelectedBusinessViewModel(businessMarkers);
+    selectedBusiness.setup();
 
     businessMarkers.forEach(({id, marker}) => {
-      const markerViewModel = new MarkerViewModel(this.selectedBusinessId, id, marker);
+      const markerViewModel = new MarkerViewModel(selectedBusiness.observableId, id, marker);
       markerViewModel.setBindings();
     });
 
@@ -68,6 +68,10 @@ export default class NeighborhoodManager {
 
     this.filteredBusinessIds = searchViewModel.getFilteredBusinessIds();
 
+    const filterSelectedBusinessViewModel =
+      new FilterSelectedBusinessViewModel(this.filteredBusinessIds, selectedBusiness.observableId);
+    filterSelectedBusinessViewModel.setup();
+
     const filteredNameIdPair = ko.pureComputed(
       () => this.filteredBusinessIds().map(id => observableNameIdPair()[id]),
       this,
@@ -75,7 +79,7 @@ export default class NeighborhoodManager {
 
     const menuSelectorViewModel = new BusinessSelectorViewModel(
       filteredNameIdPair,
-      this.selectedBusinessId,
+      selectedBusiness.observableId,
     );
     menuSelectorViewModel.setBindings();
 
@@ -86,7 +90,7 @@ export default class NeighborhoodManager {
 
     const infoWindowViewModel = new InfoWindowViewModel(
       infoWindowView,
-      this.selectedBusinessMarker,
+      selectedBusiness.observableBusinessMarker,
     );
     infoWindowViewModel.setup();
 

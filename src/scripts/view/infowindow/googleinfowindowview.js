@@ -26,7 +26,7 @@ export default class GoogleInfoWindowView {
   // IntelliJ bug: could not understand usage of methods from a subclass
   // noinspection JSUnusedGlobalSymbols
   close() {
-    this.googleInfoWindow.marker = null;
+    this.googleInfoWindow.close();
   }
 
   /**
