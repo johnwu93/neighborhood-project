@@ -5,6 +5,7 @@ html(lang="en")
         title Nice Stops in Los Angeles
     body
         div.row
-            != require('apply-loader!pug-loader!./sidemenu.pug')
-            div.col.s9
+            div.col.s3
+                != require('apply-loader!pug-loader!./sidemenu.pug')
+            div.col.s9.map-container
                 section#map

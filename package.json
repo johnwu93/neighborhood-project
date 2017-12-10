@@ -6,6 +6,7 @@
   "scripts": {
     "clean:dev": "rm -rf temp/",
     "clean:prod": "rm -rf prod/",
+    "styles:dev": "/usr/local/bin/scss src/styles/styles.scss temp/styles.css",
     "build:dev": "npm run clean:dev && node_modules/.bin/webpack --config tasks/webpack/webpack.dev.js",
     "build:prod": "npm run clean:prod && node_modules/.bin/webpack --config tasks/webpack/webpack.prod.js",
     "start": "node_modules/.bin/webpack-dev-server --config tasks/webpack/webpack.dev.js --open",
