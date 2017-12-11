@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -27,7 +26,7 @@ module.exports = merge(
       }),
       new CopyWebpackPlugin([
         {
-          from: path.join(projectPaths.ROOT_DIRECTORY, 'production-scripts'),
+          from: projectPaths.includeRootDir('production-scripts'),
           to: projectPaths.PROD_DIRECTORY,
         },
       ]),

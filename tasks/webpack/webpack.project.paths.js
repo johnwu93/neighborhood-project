@@ -1,8 +1,22 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 
+const {join} = path;
+
 const ROOT_DIRECTORY = path.resolve(__dirname, '../../');
-module.exports.ROOT_DIRECTORY = ROOT_DIRECTORY;
-module.exports.SOURCE_DIRECTORY = path.join(ROOT_DIRECTORY, 'src');
-module.exports.DEV_DIRECTORY = path.join(ROOT_DIRECTORY, 'temp');
-module.exports.PROD_DIRECTORY = path.join(ROOT_DIRECTORY, 'build');
+
+
+const includeRootDir = function includeRootDir(filePath) {
+  return join(ROOT_DIRECTORY, filePath);
+};
+
+const SOURCE_DIR = includeRootDir('src');
+const includeSourceDir = function includeSourceDir(filePath) {
+  return join(SOURCE_DIR, filePath);
+};
+
+
+module.exports.includeRootDir = includeRootDir;
+module.exports.includeSourceDir = includeSourceDir;
+module.exports.DEV_DIRECTORY = includeRootDir('temp');
+module.exports.PROD_DIRECTORY = includeRootDir('build');

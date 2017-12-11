@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const path = require('path');
 const styles = require('./webpack.styles');
 const merge = require('webpack-merge');
 
@@ -14,13 +13,13 @@ module.exports = merge(
   base.BASE_CONFIG,
   util.includeConvertedPugPlugin(),
   util.includeModule(
-    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/materialize-css/dist'),
+    projectPaths.includeRootDir('node_modules/materialize-css/dist'),
     'materialize',
     'css/materialize.css',
     'js/materialize.js',
   ),
   util.includeVendors(
-    path.resolve(projectPaths.ROOT_DIRECTORY, 'node_modules/jquery/dist/jquery.js'),
+    projectPaths.includeRootDir('node_modules/jquery/dist/jquery.js'),
   ),
   {
     devServer: {

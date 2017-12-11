@@ -58,7 +58,7 @@ module.exports.includeModule = function includeModule(
 const includeHTMLPlugin = function includeHTMLPlugin() {
   return new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: path.resolve(projectPaths.SOURCE_DIRECTORY, 'template.html'),
+    template: projectPaths.includeSourceDir('template.html'),
   });
 };
 
@@ -67,7 +67,7 @@ module.exports.includeConvertedPugPlugin = function includeConvertedPugPlugin() 
     plugins: [new HtmlWebpackPlugin({
       // For details on `!!` see https://webpack.github.io/docs/loaders.html#loader-order
       filename: 'index.html',
-      template: `!!pug-loader!${path.resolve(projectPaths.SOURCE_DIRECTORY, 'templates/index.pug')}`,
+      template: `!!pug-loader!${projectPaths.includeSourceDir('templates/index.pug')}`,
     })],
   };
 };
