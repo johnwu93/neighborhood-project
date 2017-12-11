@@ -9,17 +9,7 @@ const projectPaths = require('./webpack.project.paths.js');
 
 const VENDORS_DIR = 'vendors/';
 
-module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
-  const copyCommands = vendorsFilePath.map(filePath => ({
-    from: filePath,
-    to: VENDORS_DIR,
-  }));
-
-  const vendorFileNames = vendorsFilePath.map((fileName) => {
-    const locations = fileName.split('/');
-    return path.join(VENDORS_DIR, locations[locations.length - 1]);
-  });
-
+const addVendors = function addVendors(copyCommands, vendorFileNames) {
   return {
     plugins: [
       new CopyWebpackPlugin(copyCommands),
@@ -29,6 +19,39 @@ module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
       }),
     ],
   };
+};
+
+const createCopyCommand = function createCopyCommand(src, dest) {
+  return {
+    from: src,
+    to: dest,
+  };
+};
+
+module.exports.includeVendors = function includeVendors(...vendorsFilePath) {
+  const copyCommands = vendorsFilePath.map(filePath => createCopyCommand(filePath, VENDORS_DIR));
+
+  const vendorFileNames = vendorsFilePath.map(fileName =>
+    path.join(VENDORS_DIR, path.basename(fileName)),
+  );
+
+  return addVendors(copyCommands, vendorFileNames);
+};
+
+module.exports.includeModule = function includeModule(
+  packagePath,
+  newPackageName,
+  ...relativeFilePaths
+) {
+  const packageDestination = path.join(VENDORS_DIR, newPackageName);
+  const copyCommand = [createCopyCommand(packagePath, packageDestination)];
+
+
+  const desiredImportedFiles = relativeFilePaths.map(fileName =>
+    path.join(packageDestination, fileName),
+  );
+
+  return addVendors(copyCommand, desiredImportedFiles);
 };
 
 
