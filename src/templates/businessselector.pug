@@ -1,4 +1,5 @@
 section#businesses
-    ul(data-bind="foreach: businesses")
-        li
-            a(data-bind="text: name, click: $parent.selectBusinessId.bind($data, id), attr: {href: href}")
+    div.collection(data-bind="foreach: businesses")
+        a.collection-item(data-bind="click: $parent.selectBusinessId.bind($data, id), attr: {href: href}")
+            h5.black-text(data-bind="text: name")
+

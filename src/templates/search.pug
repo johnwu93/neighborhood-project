@@ -1,2 +1,8 @@
-section#search Query:
-    input(data-bind="textInput: searchQuery")
+nav
+    div.nav-wrapper.blue
+        form(onSubmit="return false;")
+            div.input-field
+                input#search(placeholder="filter" type="search" data-bind="textInput: searchQuery" required)
+                label.label-icon(for="search")
+                    i.material-icons search
+
