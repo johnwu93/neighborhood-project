@@ -14,7 +14,9 @@ export default class BusinessSelectorViewModel {
 
   setBindings() {
     const self = this;
-    const businesses = self.businesses().map(business => ({...business, href: `#${business.id}`}));
+    const businesses = ko.pureComputed(() => self.businesses()
+      .map(business => ({...business, href: `#${business.id}`}))
+      , self);
     const viewModel = {
       businesses,
       selectBusinessId(newBusinessId) {
