@@ -4,9 +4,14 @@ html(lang="en")
         meta(charset='UFT-8')
         link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
         title Nice Stops in Los Angeles
+        // inject:css
+        // endinject
     body
         div.row
             div.col.s3
-                != require('apply-loader!pug-loader!./sidemenu.pug')
+                include ./sidemenu.pug
             div.col.s9.map-container
                 section#map
+
+        // inject:js
+        // endinject
