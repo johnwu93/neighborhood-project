@@ -1,61 +1,90 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const ModuleCopier = require('./modulecopier');
+
 const gulp = require('gulp');
 const pug = require('gulp-pug');
 const path = require('path');
-const runSequence = require('run-sequence');
+const runSequence = require('run-sequence').use(gulp);
 
 
 const inject = require('gulp-inject');
 
 const ROOT = path.resolve(__dirname, '../../../');
-const INDEX = 'index';
-const PUG_SOURCE_PATH = path.join(ROOT, `src/templates/${INDEX}.pug`);
-
-const TEMP_PATH = path.join(ROOT, 'temp');
-
-const VENDORS_PATH = path.join(TEMP_PATH, 'vendors');
-const MATERIALIZE_PATH = path.join(VENDORS_PATH, 'materialize-css');
-const OUTPUT_HTML_FILE = path.join(TEMP_PATH, `${INDEX}.html`);
-
-const copyFiles = function copyFiles(selectedCopyFiles, destination) {
-  gulp
-    .src(selectedCopyFiles)
-    .pipe(gulp.dest(destination));
-};
-const injectFiles = function injectFiles(htmlInputFile, injectedFilePaths) {
-  const computedOptions = {
-    read: false,
-  };
+const injectFiles = function injectFiles(htmlInputFile, injectedFilePaths, outputDestination) {
   return gulp.src(htmlInputFile)
-    .pipe(inject(gulp.src(injectedFilePaths, computedOptions), {relative: true}))
-    .pipe(gulp.dest(TEMP_PATH));
+    .pipe(inject(gulp.src(injectedFilePaths, {read: false}), {relative: true}))
+    .pipe(gulp.dest(outputDestination));
 };
 
-gulp.task('compilePug', (done) => {
-  gulp
-    .src(PUG_SOURCE_PATH)
-    .pipe(pug({}))
-    .pipe(gulp.dest(TEMP_PATH))
-    .on('end', () => done());
-});
+class HTMLBuilder {
+  constructor(pugFile, outputDest) {
+    this.pugFile = pugFile;
+    this.outputDest = outputDest;
 
-gulp.task('copyAssets', (done) => {
-  copyFiles('./node_modules/materialize-css/dist/**/*', MATERIALIZE_PATH);
-  copyFiles('node_modules/jquery/dist/jquery.js', VENDORS_PATH);
-  done();
-});
+    const vendorsPath = path.join(outputDest, 'vendors');
 
-gulp.task('injectHTMLDependencies', () => {
-  injectFiles(OUTPUT_HTML_FILE, [
-    path.join(MATERIALIZE_PATH, 'css/materialize.css'),
-    path.join(MATERIALIZE_PATH, 'js/materialize.js'),
-    path.join(VENDORS_PATH, 'jquery.js'),
-    path.join(TEMP_PATH, 'styles/styles.css'),
-    path.join(TEMP_PATH, 'bundle.js'),
-  ]);
-});
+    this.materializeModule = new ModuleCopier(
+      'node_modules/materialize-css/dist/**/*',
+      path.join(vendorsPath, 'materialize-css'),
+      ['css/materialize.css', 'js/materialize.js'],
+    );
+    this.jqueryModule = new ModuleCopier(
+      'node_modules/jquery/dist/jquery.js',
+      vendorsPath,
+      ['jquery.js'],
+    );
+  }
+
+  compilePug(done) {
+    gulp
+      .src(this.pugFile)
+      .pipe(pug({}))
+      .pipe(gulp.dest(this.outputDest))
+      .on('end', () => done());
+  }
+
+  copyFiles() {
+    this.materializeModule.copy();
+    this.jqueryModule.copy();
+  }
+
+  injectDependencies() {
+    const filesToInject = [
+      ...this.materializeModule.findFiles(),
+      ...this.jqueryModule.findFiles(),
+      path.join(this.outputDest, 'styles/styles.css'),
+      path.join(this.outputDest, 'bundle.js'),
+    ];
+    const fileName = path.basename(this.pugFile, '.pug');
+    const compiledFileName = path.join(this.outputDest, `${fileName}.html`);
+    injectFiles(
+      compiledFileName,
+      filesToInject,
+      this.outputDest,
+    );
+  }
+}
 
 
-gulp.task('buildHTML', done =>
-  runSequence(['compilePug', 'copyAssets'], 'injectHTMLDependencies', done),
-);
+const createTasks = function createTasks() {
+  const builders = [{
+    id: 'index',
+    htmlBuilder:
+      new HTMLBuilder(path.join(ROOT, 'src/templates/index.pug'), path.join(ROOT, 'temp')),
+  }, {
+    id: 'infoWindow',
+    htmlBuilder:
+      new HTMLBuilder(path.join(ROOT, 'src/templates/infowindowindex.pug'), path.join(ROOT, 'temp')),
+  }];
+  builders.forEach(({id, htmlBuilder}) => {
+    const compilePugTask = `compilePug:${id}`;
+    gulp.task(compilePugTask, done => htmlBuilder.compilePug(done));
+    gulp.task(`copyAssets:${id}`, () => htmlBuilder.copyFiles());
+    const injectHTMLDependenciesTask = `injectHTMLDependencies:${id}`;
+    gulp.task(injectHTMLDependenciesTask, () => htmlBuilder.injectDependencies());
+    gulp.task(`buildHTML:${id}`, done => runSequence(compilePugTask, injectHTMLDependenciesTask, done));
+  });
+};
+
+createTasks();
+

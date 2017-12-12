@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset='UFT-8')
+        link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+        title Nice Stops in Los Angeles
+        // inject:css
+        // endinject
+    body
+        include ./infowindowmixin.pug
+
+        div.row
+            div.col.s4
+                div.card
+                    +infowindow('Fred 62', '8.5',
+                    '1850 N Vermont Ave',
+                    'Los Angeles CA, 90027',
+                    'http://via.placeholder.com/350x150',
+                    'heir menu has had a facelift recently, but you can still get items like the New Amsterdam breakfast sandwich and California omelette. And for the vegetarians, there are plenty of options',
+                    'https://foursquare.com/item/53dbf3c3498ece72b04d3eab')
+        // inject:js
+        // endinject

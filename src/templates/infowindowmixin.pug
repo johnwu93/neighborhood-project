@@ -1,0 +1,18 @@
+mixin infowindow(name, rating, address, city, myImage, reviewText, reviewURL)
+    div.section
+        div.row
+            div.col.s6
+                h5
+                    a(href="#") #{name}
+                div.info-text
+                    div.btn #{rating}
+                    div #{address}
+                    div #{city}
+            div.col.s6
+                img(src!=myImage style="max-width: 100%; height: 100%")
+
+
+    div.truncate  Review: #{reviewText}
+    a(href!=reviewURL) Read More
+
+

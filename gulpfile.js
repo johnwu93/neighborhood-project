@@ -7,4 +7,4 @@ const runSequence = require('run-sequence');
 
 const gulp = require('gulp');
 
-gulp.task('build', done => runSequence(['scripts', 'compileSCSS'], 'buildHTML', done));
+gulp.task('build', done => runSequence(['scripts', 'compileSCSS', 'copyAssets'], 'buildHTML', done));
