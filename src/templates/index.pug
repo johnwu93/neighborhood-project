@@ -7,11 +7,13 @@ html(lang="en")
         // inject:css
         // endinject
     body
-        div.row
-            div.col.s3
-                include ./sidemenu.pug
-            div.col.s9.map-container
-                section#map
-
         // inject:js
         // endinject
+        a(href="#" data-activates="side-menu" class="button-collapse")
+            i.material-icons menu
+        include ./sidemenu.pug
+        div.map-container
+            section#map
+
+
+        script $(".button-collapse").sideNav();

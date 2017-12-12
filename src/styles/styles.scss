@@ -21,3 +21,13 @@ body {
 .info-text {
   font-size: 1vmax;
 }
+
+body {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  body {
+    padding-left: 0;
+  }
+}

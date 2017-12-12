@@ -50,8 +50,8 @@ class HTMLBuilder {
 
   injectDependencies() {
     const filesToInject = [
-      ...this.materializeModule.findFiles(),
       ...this.jqueryModule.findFiles(),
+      ...this.materializeModule.findFiles(),
       path.join(this.outputDest, 'styles/styles.css'),
       path.join(this.outputDest, 'bundle.js'),
     ];
