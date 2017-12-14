@@ -12,20 +12,20 @@ describe('Review Scraper', () => {
 
   describe('Scraping Maru Coffee', () => {
     beforeAll(function setup(done) {
-      this.businessScraper = new ReviewScraper(MARU_COFFEE_ID);
-      this.businessScraper.retrieveResponse();
+      this.photoScraper = new ReviewScraper(MARU_COFFEE_ID);
+      this.photoScraper.retrieveResponse();
       done();
     });
 
     it('should successfully obtain a review of a shop', function testReview(done) {
-      assertResolvedPromise(this.businessScraper.fetch(), done, assertReview);
+      assertResolvedPromise(this.photoScraper.fetch(), done, assertReview);
     });
   });
 
   describe('Fake shop', () => {
     beforeAll(function setUpBusinessWithNoComments() {
-      this.businessScraper = new ReviewScraper(0);
-      this.businessScraper.promise = Promise.resolve({
+      this.photoScraper = new ReviewScraper(0);
+      this.photoScraper.promise = Promise.resolve({
         tips: {
           items: [],
         },
@@ -33,7 +33,7 @@ describe('Review Scraper', () => {
     });
 
     it('should return null if a business has no reviews', function testNull(done) {
-      assertResolvedPromise(this.businessScraper.fetch(), done, (review) => {
+      assertResolvedPromise(this.photoScraper.fetch(), done, (review) => {
         expect(review).toBe(null);
       });
     });

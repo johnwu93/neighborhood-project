@@ -16,9 +16,20 @@ const assertRating = function assertRating(scrapedRating) {
   );
 };
 
-const assertReview = function assertReview(scrapedReview) {
-  expect(scrapedReview.text).toBeNonEmptyString();
-  expect(scrapedReview.url).toBeNonEmptyString();
+const assertPhoto = function assertPhoto(photoUrl) {
+  expect(photoUrl).toBeNonEmptyString();
 };
 
-export { MARU_COFFEE_ID, assertAddress, assertRating, assertReview, assertCoordinates };
+const assertReview = function assertReview({text, url}) {
+  expect(text).toBeNonEmptyString();
+  expect(url).toBeNonEmptyString();
+};
+
+export {
+  MARU_COFFEE_ID,
+  assertAddress,
+  assertCoordinates,
+  assertRating,
+  assertPhoto,
+  assertReview,
+};

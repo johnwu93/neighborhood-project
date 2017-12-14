@@ -16,6 +16,7 @@ type Venue = {
   id: number,
   rating: number,
   location: Location,
+  photos: Array<string>,
 }
 
 type WrappedVenue = {
