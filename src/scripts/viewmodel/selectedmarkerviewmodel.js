@@ -9,6 +9,16 @@ const bounce = function bounce(marker) {
 };
 
 
+/**
+ *
+ * @param {MarkerView} marker
+ */
+const zoom = function zoom(marker) {
+  if (marker !== null) {
+    marker.zoom();
+  }
+};
+
 export default class SelectedMarkerViewModel {
   /**
    *
@@ -20,5 +30,6 @@ export default class SelectedMarkerViewModel {
 
   setup() {
     this.marker.subscribe(bounce);
+    this.marker.subscribe(zoom);
   }
 }

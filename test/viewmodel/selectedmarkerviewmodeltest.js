@@ -4,15 +4,24 @@ import SelectedMarkerViewModel from '../../src/scripts/viewmodel/selectedmarkerv
 import MarkerMock from '../view/markermock';
 
 describe('SelectedMarkerViewModel', () => {
-  it('should have marker bounce when marker changes', () => {
+  beforeEach(function setup() {
     const oldMarker = new MarkerMock();
-    const markerObservable = ko.observable(oldMarker);
-    const selectedMarkerViewModel = new SelectedMarkerViewModel(markerObservable);
+    this.markerObservable = ko.observable(oldMarker);
+    const selectedMarkerViewModel = new SelectedMarkerViewModel(this.markerObservable);
     selectedMarkerViewModel.setup();
+  });
 
+  it('should have marker bounce when marker changes', function testBounce() {
     const newMarker = new MarkerMock();
-    markerObservable(newMarker);
+    this.markerObservable(newMarker);
 
     expect(newMarker.isBounced).toBeTrue();
+  });
+
+  it('should have map zoomed to the marker when marker changes', function testZoom() {
+    const newMarker = new MarkerMock();
+    this.markerObservable(newMarker);
+
+    expect(newMarker.isFocused).toBeTrue();
   });
 });

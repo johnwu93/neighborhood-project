@@ -24,6 +24,10 @@ export default class GoogleMarkerView {
     this.googleMarker.setAnimation(4);
   }
 
+  zoom() {
+    this.map.panTo(this.googleMarker.getPosition());
+  }
+
   /**
    * @param {clickCallback} clickTask
    */

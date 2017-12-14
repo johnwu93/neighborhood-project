@@ -22,6 +22,12 @@
 
 
 /**
+ * @function
+ * @name MarkerView#zoom
+ */
+
+
+/**
  * @callback clickCallback
  */
 
