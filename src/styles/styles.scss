@@ -20,6 +20,9 @@ body {
 
 .info-text {
   font-size: 1vmax;
+  .btn {
+    margin-bottom: 1vmax;
+  }
 }
 
 
@@ -38,4 +41,8 @@ body {
 header {
   margin-top: 0 !important;
   margin-bottom: 3px !important;
+}
+
+.info-window-container{
+
 }

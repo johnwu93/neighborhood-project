@@ -36,6 +36,7 @@ export default class GoogleMapFactory {
   createInfoWindow(content) {
     return new this.google.maps.InfoWindow({
       content,
+      maxWidth: 400,
     });
   }
 }
