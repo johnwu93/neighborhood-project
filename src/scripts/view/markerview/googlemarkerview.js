@@ -20,6 +20,10 @@ export default class GoogleMarkerView {
     this.googleMarker.setMap(null);
   }
 
+  bounce() {
+    this.googleMarker.setAnimation(4);
+  }
+
   /**
    * @param {clickCallback} clickTask
    */

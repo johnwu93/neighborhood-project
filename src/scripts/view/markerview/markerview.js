@@ -11,6 +11,12 @@
 
 /**
  * @function
+ * @name MarkerView#bounce
+ */
+
+
+/**
+ * @function
  * @name MarkerView#close
  */
 

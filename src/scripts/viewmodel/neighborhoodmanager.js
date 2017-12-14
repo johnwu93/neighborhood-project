@@ -11,6 +11,7 @@ import { MarkerListViewModel } from './markerlistviewmodel';
 import FilterSelectedBusinessViewModel from './filterselectedbusinessviewmodel';
 import SelectedBusinessViewModel from './selectedbusinessviewmodel';
 import bindHeader from './headerviewmodel';
+import SelectedMarkerViewModel from './selectedmarkerviewmodel';
 
 /**
  *
@@ -99,6 +100,14 @@ export default class NeighborhoodManager {
       () => this.filteredBusinessIds().map(id => markers[id]),
       this,
     );
+
+    const selectedMarker = ko.pureComputed(() => {
+      const businessMarker = selectedBusiness.observableBusinessMarker();
+      return businessMarker === null ? null : businessMarker.marker;
+    });
+
+    const selectedMarkerViewModel = new SelectedMarkerViewModel(selectedMarker);
+    selectedMarkerViewModel.setup();
 
     const markerListViewModel = new MarkerListViewModel(markers, filteredMarkers);
     markerListViewModel.setup();

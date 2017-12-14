@@ -5,6 +5,7 @@ export default class MarkerMock {
   constructor() {
     this.isVisible = false;
     this.clickTask = null;
+    this.isBounced = false;
   }
 
   // IntelliJ bug: could not understand usage of methods from a subclass
@@ -17,6 +18,12 @@ export default class MarkerMock {
   // noinspection JSUnusedGlobalSymbols
   close() {
     this.isVisible = false;
+  }
+
+  // IntelliJ bug: could not understand usage of methods from a subclass
+  // noinspection JSUnusedGlobalSymbols
+  bounce() {
+    this.isBounced = true;
   }
 
   triggerClick() {
