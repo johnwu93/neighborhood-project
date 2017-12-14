@@ -22,10 +22,10 @@ const AUTHORIZATION_PARAMS = {
   v: dateToYMD(new Date()),
 };
 
-
+export type JSONParameterType = { [string]: string | number }
 const computeUrlQuery = function computeUrlQuery(
   urlString: string,
-  params: { [string]: string | number } = {},
+  params: JSONParameterType = {},
 ): URL {
   const urlQuery = new URL(urlString);
   // $FlowFixMe

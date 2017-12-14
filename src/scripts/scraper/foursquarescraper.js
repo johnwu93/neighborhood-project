@@ -7,8 +7,10 @@ import { computeUrlQuery, retrieveJsonData } from './util';
 
 import type { GPSCoordinates, Venue } from './foursquare/businessinfoscraper';
 import BusinessInfoScraper from './foursquare/businessinfoscraper';
-import ReviewScraper from './foursquare/reviewscraper';
 import Review from '../entities/review';
+import { retrieveReview } from './foursquare/businessretrieverpromises';
+import type { WrappedTips } from './foursquare/retrievermethods';
+import { getReview } from './foursquare/retrievermethods';
 
 type ScrapedBusinessInfo = {
   rating: ?number,
@@ -38,14 +40,15 @@ const fetchBusinessInfo =
     );
   };
 
-const fetchReview = function fetchReview(scraper: ReviewScraper): Promise<{ review: Review }> {
-  return branch(scraper.retrieveResponse(),
-    () => scraper.fetch(),
-    () => ({
-      review: null,
-    }),
-  );
-};
+const fetchReview =
+  function fetchReview(scraper: Promise<WrappedTips>): Promise<{ review: Review }> {
+    return branch(scraper,
+      () => scraper.then(getReview),
+      () => ({
+        review: null,
+      }),
+    );
+  };
 
 export default class FourSquareScraper {
   business: BusinessSearchQuery;
@@ -80,7 +83,7 @@ export default class FourSquareScraper {
     return this.promise
       .then((businessId) => {
         const fetchedBusinessInfo = fetchBusinessInfo(new BusinessInfoScraper(businessId));
-        const fetchedReviewInfo = fetchReview(new ReviewScraper(businessId));
+        const fetchedReviewInfo = fetchReview(retrieveReview(businessId));
 
         // $FlowFixMe
         return Promise.all([fetchedBusinessInfo, fetchedReviewInfo])

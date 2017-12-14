@@ -1,14 +1,16 @@
 {
   "extends": [
     "airbnb",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "plugin:jasmine/recommended"
   ],
   "parser": "babel-eslint",
   "plugins": [
     "flowtype",
     "prefer-object-spread",
     "filenames",
-    "dollar-sign"
+    "dollar-sign",
+    "jasmine"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
