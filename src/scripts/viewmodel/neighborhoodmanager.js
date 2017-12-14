@@ -10,6 +10,7 @@ import MarkerView from '../view/markerview/googlemarkerview';
 import { MarkerListViewModel } from './markerlistviewmodel';
 import FilterSelectedBusinessViewModel from './filterselectedbusinessviewmodel';
 import SelectedBusinessViewModel from './selectedbusinessviewmodel';
+import bindHeader from './headerviewmodel';
 
 /**
  *
@@ -101,5 +102,7 @@ export default class NeighborhoodManager {
 
     const markerListViewModel = new MarkerListViewModel(markers, filteredMarkers);
     markerListViewModel.setup();
+
+    bindHeader();
   }
 }

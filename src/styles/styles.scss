@@ -22,12 +22,20 @@ body {
   font-size: 1vmax;
 }
 
+
 body {
   padding-left: 300px;
 }
 
-@media only screen and (max-width : 992px) {
+
+@media only screen and (max-width: 992px) {
   body {
     padding-left: 0;
   }
+}
+
+
+header {
+  margin-top: 0 !important;
+  margin-bottom: 3px !important;
 }
