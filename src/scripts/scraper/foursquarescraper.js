@@ -4,13 +4,11 @@ import branch from 'promise-branch';
 
 import BusinessSearchQuery from '../entities/businesssearchquery';
 import { computeUrlQuery, retrieveJsonData } from './util';
-
-import type { GPSCoordinates, Venue } from './foursquare/businessinfoscraper';
-import BusinessInfoScraper from './foursquare/businessinfoscraper';
+import GPSCoordinates from '../entities/gpscoordinates';
 import Review from '../entities/review';
-import { retrieveReview } from './foursquare/businessretrieverpromises';
-import type { WrappedTips } from './foursquare/retrievermethods';
-import { getReview } from './foursquare/retrievermethods';
+import { retrieveBusinessInfo, retrieveReview } from './foursquare/businessretrieverpromises';
+import type { Venue, WrappedTips, WrappedVenue } from './foursquare/retrievermethods';
+import { getAddress, getCoordinates, getRating, getReview } from './foursquare/retrievermethods';
 
 type ScrapedBusinessInfo = {
   rating: ?number,
@@ -31,11 +29,13 @@ const getId = function getId(businessJsonData: { venues: Array<Venue> }): number
 };
 
 const fetchBusinessInfo =
-  function fetchBusinessInfo(scraper: BusinessInfoScraper): Promise<ScrapedBusinessInfo> {
-    return branch(scraper.retrieveResponse(),
-      () => Promise
-        .all([scraper.fetchRating(), scraper.fetchAddress(), scraper.fetchCoordinates()])
-        .then(([rating, address, coords]) => ({rating, address, coords})),
+  function fetchBusinessInfo(businessInfo: Promise<WrappedVenue>): Promise<ScrapedBusinessInfo> {
+    return branch(businessInfo,
+      () => Promise.all([
+        businessInfo.then(getRating),
+        businessInfo.then(getAddress),
+        businessInfo.then(getCoordinates),
+      ]).then(([rating, address, coords]) => ({rating, address, coords})),
       () => ({rating: null, address: null, coords: null}),
     );
   };
@@ -49,6 +49,7 @@ const fetchReview =
       }),
     );
   };
+
 
 export default class FourSquareScraper {
   business: BusinessSearchQuery;
@@ -79,10 +80,15 @@ export default class FourSquareScraper {
     return this.promise;
   }
 
+  // eslint-disable-next-line
+  retrieveBusiness(businessId: number) {
+    return retrieveBusinessInfo(businessId);
+  }
+
   fetch(): Promise<ScrapedResult> {
     return this.promise
       .then((businessId) => {
-        const fetchedBusinessInfo = fetchBusinessInfo(new BusinessInfoScraper(businessId));
+        const fetchedBusinessInfo = fetchBusinessInfo(this.retrieveBusiness(businessId));
         const fetchedReviewInfo = fetchReview(retrieveReview(businessId));
 
         // $FlowFixMe

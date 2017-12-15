@@ -1,6 +1,7 @@
 // @flow
 
 import Review from '../../entities/review';
+import GPSCoordinates from '../../entities/gpscoordinates';
 
 type Photo = {
   prefix: string,
@@ -26,6 +27,26 @@ export type WrappedTips = {
   }
 }
 
+type Location = {
+  address: string,
+  state: string,
+  city: string,
+  postalCode: number,
+  lat: number,
+  lng: number,
+}
+
+export type Venue = {
+  id: number,
+  rating: number,
+  location: Location,
+  photos: Array<string>,
+}
+
+export type WrappedVenue = {
+  venue: Venue,
+}
+
 const unwrapPhotos = function unwrapPhotos(wrappedPhotos: WrappedPhotos): Array<Photo> {
   return wrappedPhotos.photos.items;
 };
@@ -40,6 +61,23 @@ const unwrapTips = function unwrapTips(jsonTips: WrappedTips): Array<Tip> {
 
 const convertToReview = function convertToReview(tip: Tip): Review {
   return new Review(tip.text, tip.canonicalUrl);
+};
+
+const getRating = function getRating({venue}: WrappedVenue): number {
+  const {rating} = venue;
+  return rating;
+};
+
+const getAddress = function getAddress({venue}: WrappedVenue): string {
+  const {location} = venue;
+  const {address, city, state, postalCode} = location;
+  return `${address}, ${city} ${state}, ${postalCode}`;
+};
+
+const getCoordinates = function getCoordinates({venue}: WrappedVenue) {
+  const {location} = venue;
+  const {lat, lng} = location;
+  return new GPSCoordinates(lat, lng);
 };
 
 function getFirst<ValueT, ResultT>(
@@ -59,4 +97,4 @@ const getReview = function getReview(wrappedTips: WrappedTips): ?Review {
   return getFirst(reviews, convertToReview);
 };
 
-export { getPhoto, getReview, getFirst };
+export { getPhoto, getReview, getFirst, getRating, getAddress, getCoordinates };

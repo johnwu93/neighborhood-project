@@ -8,7 +8,6 @@ import {
   assertReview,
   MARU_COFFEE_ID,
 } from '../../maru';
-import * as businessinfoscrapermodule from '../../../src/scripts/scraper/foursquare/businessinfoscraper';
 import BusinessSearchQuery from '../../../src/scripts/entities/businesssearchquery';
 
 describe('Four Square Scraper', () => {
@@ -46,7 +45,7 @@ describe('Four Square Scraper', () => {
 
     it('should treat rating and text as null if it is unable to retrieve these items', function testUnsuccessfulFetchComponents(done) {
       // hack: This would mock BusinessInfoScraper
-      spyOn(businessinfoscrapermodule.default.prototype, 'retrieveResponse').and.returnValue(Promise.reject('Could not retrieve data of business'));
+      spyOn(this.scraper, 'retrieveBusiness').and.returnValue(Promise.reject('Could not retrieve data of business'));
       assertResolvedPromise(this.scraper.fetch(), done, (scrapedInfo) => {
         expect(scrapedInfo.coords).toBeNull();
         expect(scrapedInfo.rating).toBeNull();

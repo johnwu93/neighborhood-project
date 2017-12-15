@@ -2,7 +2,7 @@
 
 import type { JSONParameterType } from '../util';
 import { computeUrlQuery, retrieveJsonData } from '../util';
-import type { WrappedPhotos, WrappedTips } from './retrievermethods';
+import type { WrappedPhotos, WrappedTips, WrappedVenue } from './retrievermethods';
 
 function retrieveBusinessAttribute<RetrieveResultType>(
   businessId: number,
@@ -29,4 +29,12 @@ const retrieveReview = function retrieveReview(businessId: number): Promise<Wrap
 };
 
 
-export { retrievePhoto, retrieveReview, retrieveBusinessAttribute };
+const retrieveBusinessInfo =
+  function retrieveBusinessInfo(businessId: number): Promise<WrappedVenue> {
+    const query = computeUrlQuery(
+      `https://api.foursquare.com/v2/venues/${businessId}`,
+    );
+    return retrieveJsonData(fetch(query));
+  };
+
+export { retrievePhoto, retrieveReview, retrieveBusinessAttribute, retrieveBusinessInfo };
