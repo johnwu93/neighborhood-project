@@ -1,8 +1,17 @@
 /* eslint-disable no-undef */
 import { assertResolvedPromise } from '../../assertutil';
-import { fetchData } from '../../../src/scripts/scraper/fetchers';
-import { retrieveReview } from '../../../src/scripts/scraper/foursquare/businessretrieverpromises';
-import { assertReview, MARU_COFFEE_ID } from '../../maru';
+import { fetchBusinessInfo, fetchData } from '../../../src/scripts/scraper/fetchers';
+import {
+  retrieveBusinessInfo,
+  retrieveReview,
+} from '../../../src/scripts/scraper/foursquare/businessretrieverpromises';
+import {
+  assertAddress,
+  assertCoordinates,
+  assertRating,
+  assertReview,
+  MARU_COFFEE_ID,
+} from '../../maru';
 import { getReview } from '../../../src/scripts/scraper/foursquare/retrievermethods';
 
 describe('fetchers', () => {
@@ -17,5 +26,24 @@ describe('fetchers', () => {
   it('should get a review of Maru Coffee', (done) => {
     const maruReviewPromise = fetchData(retrieveReview(MARU_COFFEE_ID), getReview);
     assertResolvedPromise(maruReviewPromise, done, result => assertReview(result));
+  });
+
+  it('should get information about Maru Coffee', (done) => {
+    const promise = fetchBusinessInfo(retrieveBusinessInfo(MARU_COFFEE_ID));
+    assertResolvedPromise(promise, done, (scrapedInfo) => {
+      const {coords, rating, address} = scrapedInfo;
+      assertCoordinates(coords);
+      assertRating(rating);
+      assertAddress(address);
+    });
+  });
+
+  it('should return null entries of a shop', (done) => {
+    const promise = fetchBusinessInfo(retrieveBusinessInfo(0));
+    assertResolvedPromise(promise, done, ({coords, rating, address}) => {
+      expect(coords).toBeNull();
+      expect(rating).toBeNull();
+      expect(address).toBeNull();
+    });
   });
 });

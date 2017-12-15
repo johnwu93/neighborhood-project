@@ -30,11 +30,13 @@ export default class NeighborhoodManager {
   /**
    * @param {Array<Business>} businesses
    * @param {GoogleMapFactory} googleMapFactory
+   * @param {google.maps.Map} map
    * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */
-  constructor(businesses, googleMapFactory) {
+  constructor(businesses, googleMapFactory, map) {
     this.googleMapFactory = googleMapFactory;
     this.businesses = businesses;
+    this.map = map;
   }
 
   /**
@@ -42,10 +44,8 @@ export default class NeighborhoodManager {
    * @property {Array<BusinessMarker>} businessMarkers
    */
   setup() {
-    const map = this.googleMapFactory.createMap();
-
     const markers = this.businesses.map(business =>
-      new MarkerView(map, this.googleMapFactory.createMarker(business.coords)),
+      new MarkerView(this.map, this.googleMapFactory.createMarker(business.coords)),
     );
 
     // noinspection JSUnresolvedFunction
@@ -86,7 +86,7 @@ export default class NeighborhoodManager {
     menuSelectorViewModel.setBindings();
 
     const infoWindowView = new GoogleInfoWindowView(
-      map,
+      this.map,
       this.googleMapFactory.createInfoWindow('test'),
     );
 
