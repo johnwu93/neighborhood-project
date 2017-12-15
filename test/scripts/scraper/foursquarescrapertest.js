@@ -36,24 +36,23 @@ describe('Four Square Scraper', () => {
     });
 
     it('should scrape successfully', function testFetch(done) {
-      assertResolvedPromise(this.scraper.fetch(), done, (scrapedInfo) => {
+      this.scraper.fetch().then((scrapedInfo) => {
         assertCoordinates(scrapedInfo.coords);
         assertRating(scrapedInfo.rating);
         assertAddress(scrapedInfo.address);
         assertReview(scrapedInfo.review);
-        assertPhoto(scrapedInfo.photo);
+        assertPhoto(scrapedInfo.photo, done);
       });
     });
 
     it('should treat rating and text as null if it is unable to retrieve these items', function testUnsuccessfulFetchComponents(done) {
-      // hack: This would mock BusinessInfoScraper
       spyOn(this.scraper, 'retrieveBusiness').and.returnValue(Promise.reject('Could not retrieve data of business'));
-      assertResolvedPromise(this.scraper.fetch(), done, (scrapedInfo) => {
+      this.scraper.fetch().then((scrapedInfo) => {
         expect(scrapedInfo.coords).toBeNull();
         expect(scrapedInfo.rating).toBeNull();
         expect(scrapedInfo.address).toBeNull();
         assertReview(scrapedInfo.review);
-        assertPhoto(scrapedInfo.photo);
+        assertPhoto(scrapedInfo.photo, done);
       });
     });
   });

@@ -36,6 +36,9 @@ describe('retrievermethods', () => {
 
   it('should successfully obtain a photo of a shop', (done) => {
     const photoRetrieverPromise = retrievePhoto(MARU_COFFEE_ID);
-    assertResolvedPromise(photoRetrieverPromise.then(getPhoto), done, assertPhoto);
+    photoRetrieverPromise
+      .then(getPhoto)
+      .then(photoURL => assertPhoto(photoURL, done))
+      .catch(() => done.fail(new Error('Search should have succeeded')));
   });
 });

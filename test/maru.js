@@ -16,8 +16,15 @@ const assertRating = function assertRating(scrapedRating) {
   );
 };
 
-const assertPhoto = function assertPhoto(photoUrl) {
+const assertPhoto = function assertPhoto(photoUrl, done) {
   expect(photoUrl).toBeNonEmptyString();
+  fetch(photoUrl).then((response) => {
+    if (response.ok) {
+      done();
+    }
+  }).catch(() => {
+    throw Error();
+  });
 };
 
 const assertReview = function assertReview({text, url}) {

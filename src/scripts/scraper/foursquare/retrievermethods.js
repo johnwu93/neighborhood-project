@@ -52,7 +52,7 @@ const unwrapPhotos = function unwrapPhotos(wrappedPhotos: WrappedPhotos): Array<
 };
 
 const convertToPhotoUrl = function convertToPhotoUrl(photo: Photo) {
-  return photo.prefix + photo.suffix.substr(1);
+  return `${photo.prefix}300x300${photo.suffix}`;
 };
 
 const unwrapTips = function unwrapTips(jsonTips: WrappedTips): Array<Tip> {
