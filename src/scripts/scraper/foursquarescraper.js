@@ -1,55 +1,31 @@
 // @flow
 // $FlowFixMe
-import branch from 'promise-branch';
 
 import BusinessSearchQuery from '../entities/businesssearchquery';
 import { computeUrlQuery, retrieveJsonData } from './util';
 import GPSCoordinates from '../entities/gpscoordinates';
 import Review from '../entities/review';
-import { retrieveBusinessInfo, retrieveReview } from './foursquare/businessretrieverpromises';
-import type { Venue, WrappedTips, WrappedVenue } from './foursquare/retrievermethods';
-import { getAddress, getCoordinates, getRating, getReview } from './foursquare/retrievermethods';
-
-type ScrapedBusinessInfo = {
-  rating: ?number,
-  address: ?string,
-  coords: ?GPSCoordinates,
-}
+import {
+  retrieveBusinessInfo,
+  retrievePhoto,
+  retrieveReview,
+} from './foursquare/businessretrieverpromises';
+import type { Venue } from './foursquare/retrievermethods';
+import { getPhoto, getReview} from './foursquare/retrievermethods';
+import {fetchData, fetchBusinessInfo} from './fetchers';
 
 type ScrapedResult = {
   rating: ?number,
   address: ?string,
   review: ?Review,
   coords: ?GPSCoordinates,
+  photo: ?string,
 }
 
 
 const getId = function getId(businessJsonData: { venues: Array<Venue> }): number {
   return businessJsonData.venues[0].id;
 };
-
-const fetchBusinessInfo =
-  function fetchBusinessInfo(businessInfo: Promise<WrappedVenue>): Promise<ScrapedBusinessInfo> {
-    return branch(businessInfo,
-      () => Promise.all([
-        businessInfo.then(getRating),
-        businessInfo.then(getAddress),
-        businessInfo.then(getCoordinates),
-      ]).then(([rating, address, coords]) => ({rating, address, coords})),
-      () => ({rating: null, address: null, coords: null}),
-    );
-  };
-
-const fetchReview =
-  function fetchReview(scraper: Promise<WrappedTips>): Promise<{ review: Review }> {
-    return branch(scraper,
-      () => scraper.then(getReview),
-      () => ({
-        review: null,
-      }),
-    );
-  };
-
 
 export default class FourSquareScraper {
   business: BusinessSearchQuery;
@@ -89,12 +65,13 @@ export default class FourSquareScraper {
     return this.promise
       .then((businessId) => {
         const fetchedBusinessInfo = fetchBusinessInfo(this.retrieveBusiness(businessId));
-        const fetchedReviewInfo = fetchReview(retrieveReview(businessId));
+        const fetchedReviewInfo = fetchData(retrieveReview(businessId), getReview);
+        const fetchedPhotoInfo = fetchData(retrievePhoto(businessId), getPhoto);
 
         // $FlowFixMe
-        return Promise.all([fetchedBusinessInfo, fetchedReviewInfo])
-          .then(([businessInfo, reviewInfo]) => (
-            {...businessInfo, review: reviewInfo}
+        return Promise.all([fetchedBusinessInfo, fetchedReviewInfo, fetchedPhotoInfo])
+          .then(([businessInfo, reviewInfo, photoInfo]) => (
+            {...businessInfo, review: reviewInfo, photo: photoInfo}
           ));
       });
   }

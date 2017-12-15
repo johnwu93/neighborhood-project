@@ -4,6 +4,7 @@ import FourSquareScraper from '../../../src/scripts/scraper/foursquarescraper';
 import {
   assertAddress,
   assertCoordinates,
+  assertPhoto,
   assertRating,
   assertReview,
   MARU_COFFEE_ID,
@@ -40,6 +41,7 @@ describe('Four Square Scraper', () => {
         assertRating(scrapedInfo.rating);
         assertAddress(scrapedInfo.address);
         assertReview(scrapedInfo.review);
+        assertPhoto(scrapedInfo.photo);
       });
     });
 
@@ -51,6 +53,7 @@ describe('Four Square Scraper', () => {
         expect(scrapedInfo.rating).toBeNull();
         expect(scrapedInfo.address).toBeNull();
         assertReview(scrapedInfo.review);
+        assertPhoto(scrapedInfo.photo);
       });
     });
   });
