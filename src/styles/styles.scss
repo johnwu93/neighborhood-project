@@ -43,6 +43,11 @@ header {
   margin-bottom: 3px !important;
 }
 
-.info-window-container{
 
+//noinspection Stylelint
+#toast-container {
+  top: auto !important;
+  right: auto !important;
+  bottom: 0;
+  left:0;
 }

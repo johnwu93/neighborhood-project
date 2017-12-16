@@ -1,7 +1,7 @@
 import GoogleMapsLoader from 'google-maps';
 import GoogleMapFactory from './view/googlemapfactory';
 import NeighborhoodManager from './viewmodel/neighborhoodmanager';
-import BusinessCollectionRetriever from './scraper/businesscollectionretriever';
+import FourSquareScraperViewModel from './viewmodel/foursquarescraperviewmodel';
 import BusinessSearchQuery from './entities/businesssearchquery';
 
 GoogleMapsLoader.KEY = 'AIzaSyCW6adgGSbXijMqJsDFWYDN5_2lfAjon1c';
@@ -21,7 +21,7 @@ GoogleMapsLoader.load((google) => {
   ].map(businessName => new BusinessSearchQuery(businessName));
 
 
-  const retriever = new BusinessCollectionRetriever(hipsterBusinessesQueries);
+  const retriever = new FourSquareScraperViewModel(hipsterBusinessesQueries);
   const neighborhoodManager = new NeighborhoodManager(retriever, googleMapFactory);
   // noinspection JSIgnoredPromiseFromCall
   neighborhoodManager.initialize();

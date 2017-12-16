@@ -1,6 +1,6 @@
-import { assertResolvedPromise } from './assertutil';
-import BusinessCollectionRetriever from '../src/scripts/scraper/businesscollectionretriever';
-import BusinessSearchQuery from '../src/scripts/entities/businesssearchquery';
+import { assertResolvedPromise } from '../assertutil';
+import BusinessSearchQuery from '../../src/scripts/entities/businesssearchquery';
+import FourSquareScraperViewModel from '../../src/scripts/viewmodel/foursquarescraperviewmodel';
 
 describe('DataFetcher', () => {
   it('should retrieve all businesses', (done) => {
@@ -13,7 +13,7 @@ describe('DataFetcher', () => {
       'Harvard & Stone',
     ].map(businessName => new BusinessSearchQuery(businessName));
 
-    const retriever = new BusinessCollectionRetriever(hipsterBusinessesQueries);
+    const retriever = new FourSquareScraperViewModel(hipsterBusinessesQueries);
     assertResolvedPromise(retriever.fetch(), done, (businesses) => {
       expect(businesses.length).toEqual(hipsterBusinessesQueries.length);
     });

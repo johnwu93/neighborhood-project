@@ -1,5 +1,7 @@
 // @flow
-import { retrieveBusinessComponents, retrieveBusinessId } from './foursquarescraper';
+// $FlowFixMe
+import Materialize from 'materialize-css/dist/js/materialize';
+import { retrieveBusinessComponents, retrieveBusinessId } from '../scraper/foursquarescraper';
 import BusinessSearchQuery from '../entities/businesssearchquery';
 import Business from '../entities/business';
 
@@ -20,7 +22,7 @@ async function retrieveInformation(
 }
 
 
-export default class BusinessCollectionRetriever {
+export default class FourSquareScraperViewModel {
   businessQueries: [BusinessSearchQuery];
 
   constructor(businessQueries: [BusinessSearchQuery]) {
@@ -33,6 +35,9 @@ export default class BusinessCollectionRetriever {
       retrieveInformation(query, retrievedBusinesses),
     );
     await Promise.all(scrapers);
+    if (retrievedBusinesses.length === 0) {
+      Materialize.toast('Could not fetch business data. Please check your internet connection', 4000);
+    }
     return retrievedBusinesses;
   }
 }
