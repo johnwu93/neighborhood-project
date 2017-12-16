@@ -4,6 +4,7 @@ import Materialize from 'materialize-css/dist/js/materialize';
 import { retrieveBusinessComponents, retrieveBusinessId } from '../scraper/foursquarescraper';
 import BusinessSearchQuery from '../entities/businesssearchquery';
 import Business from '../entities/business';
+import type { BusinessScraperViewModel } from './businessscraperviewmodel';
 
 async function retrieveInformation(
   businessQuery: BusinessSearchQuery,
@@ -22,14 +23,14 @@ async function retrieveInformation(
 }
 
 
-export default class FourSquareScraperViewModel {
+export default class FourSquareScraperViewModel implements BusinessScraperViewModel {
   businessQueries: [BusinessSearchQuery];
 
   constructor(businessQueries: [BusinessSearchQuery]) {
     this.businessQueries = businessQueries;
   }
 
-  async fetch() {
+  async fetch(): Promise<Array<Business>> {
     const retrievedBusinesses = [];
     const scrapers = this.businessQueries.map(query =>
       retrieveInformation(query, retrievedBusinesses),

@@ -29,7 +29,7 @@ const convertNameIdPair = function convertNameIdPair({id, business}) {
  */
 export default class NeighborhoodManager {
   /**
-   * @param {FourSquareScraperViewModel} retriever
+   * @param {BusinessScraperViewModel} retriever
    * @param {GoogleMapFactory} googleMapFactory
    * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */

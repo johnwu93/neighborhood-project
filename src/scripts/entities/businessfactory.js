@@ -9,7 +9,8 @@ const businessFactory = function businessFactory(
     rating: number,
     address: string,
     review: { text: string, url: string },
-    coords: { lat: number, lng: number }
+    coords: { lat: number, lng: number },
+    photo: string
   },
 ) {
   return new Business(
@@ -18,6 +19,7 @@ const businessFactory = function businessFactory(
     business.address,
     new Review(business.review.text, business.review.url),
     new GPSCoordinates(business.coords.lat, business.coords.lng),
+    business.photo,
   );
 };
 
