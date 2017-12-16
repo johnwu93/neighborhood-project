@@ -51,3 +51,14 @@ header {
   bottom: 0;
   left:0;
 }
+
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.review {
+  display: inline-flex;
+  vertical-align: middle;
+}
