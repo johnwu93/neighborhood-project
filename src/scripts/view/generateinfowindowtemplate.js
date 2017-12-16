@@ -17,12 +17,12 @@ const generateInfoWindowTemplate = function generateInfoWindowTemplate(business)
             <div class="hide-on-med-and-down">${street}</div>
             <div class="hide-on-med-and-down">${city}</div>
             <h6 class="hide-on-large-only">
-              <a href="${url}">Read Review</a>
+              <a href="${url}">Read Review!</a>
             </h6>
           </article>
         </section>
         <section class="col l6 hide-on-med-and-down">
-          <img src="${photo}" class="materialboxed responsive-img" alt="">
+          <img src="${photo}" class="photo" alt="">
         </section>
       </div>
       <section class="hide-on-med-and-down">
