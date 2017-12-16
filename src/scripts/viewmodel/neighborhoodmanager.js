@@ -12,6 +12,7 @@ import FilterSelectedBusinessViewModel from './filterselectedbusinessviewmodel';
 import SelectedBusinessViewModel from './selectedbusinessviewmodel';
 import bindHeader from './headerviewmodel';
 import SelectedMarkerViewModel from './selectedmarkerviewmodel';
+import prettyPrintJson from '../scraper/prettyprintjson';
 
 /**
  *
@@ -28,28 +29,33 @@ const convertNameIdPair = function convertNameIdPair({id, business}) {
  */
 export default class NeighborhoodManager {
   /**
-   * @param {Array<Business>} businesses
+   * @param {BusinessCollectionRetriever} retriever
    * @param {GoogleMapFactory} googleMapFactory
-   * @param {google.maps.Map} map
    * @property {KnockoutObservable<BusinessMarker>}selectedBusinessMarker
    */
-  constructor(businesses, googleMapFactory, map) {
+  constructor(retriever, googleMapFactory) {
     this.googleMapFactory = googleMapFactory;
-    this.businesses = businesses;
-    this.map = map;
+    this.retriever = retriever;
+  }
+
+  async initialize() {
+    this.map = this.googleMapFactory.createMap();
+    this.retriever.fetch()
+      .then(prettyPrintJson)
+      .then(businesses => this.setupViews(businesses));
   }
 
   /**
    * @describe creates the binds and the necessary bindings to display map
-   * @property {Array<BusinessMarker>} businessMarkers
+   * @param {[Business]} businesses
    */
-  setup() {
-    const markers = this.businesses.map(business =>
+  setupViews(businesses) {
+    const markers = businesses.map(business =>
       new MarkerView(this.map, this.googleMapFactory.createMarker(business.coords)),
     );
 
     // noinspection JSUnresolvedFunction
-    const businessMarkers = _.unzip([this.businesses, markers]).map(
+    const businessMarkers = _.unzip([businesses, markers]).map(
       ([business, marker], id) => new BusinessMarker(business, marker, id),
     );
 

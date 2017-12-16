@@ -3,7 +3,7 @@
  * @param {Business} business
  */
 const generateInfoWindowTemplate = function generateInfoWindowTemplate(business) {
-  const {name, rating, address, review} = business;
+  const {name, rating, address, review, photo} = business;
   const [street, city] = address.split(/,(.*)/);
   const {text, url} = review;
   return `<div class="info-window-container">
@@ -19,7 +19,7 @@ const generateInfoWindowTemplate = function generateInfoWindowTemplate(business)
           </article>
         </section>
         <section class="col s6">
-          <img src="http://via.placeholder.com/350x150" alt="">
+          <img src="${photo}" alt="">
         </section>
       </div>
       <article class="truncate"> Review: ${text} </article>

@@ -4,7 +4,7 @@ import type { WrappedVenue } from './foursquare/retrievermethods';
 import { getAddress, getCoordinates, getRating } from './foursquare/retrievermethods';
 import GPSCoordinates from '../entities/gpscoordinates';
 
-type ScrapedBusinessInfo = {
+export type ScrapedBusinessInfo = {
   rating: ?number,
   address: ?string,
   coords: ?GPSCoordinates,

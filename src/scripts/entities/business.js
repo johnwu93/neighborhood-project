@@ -8,6 +8,7 @@ export default class Business {
   address: ?string;
   review: ?Review;
   coords: ?GPSCoordinates;
+  photo: ?string;
 
   constructor(
     name: string,
@@ -15,11 +16,13 @@ export default class Business {
     address: ?string,
     review: ?Review,
     coords: ?GPSCoordinates,
+    photo: ?string,
   ) {
     this.name = name;
     this.rating = rating;
     this.address = address;
     this.review = review;
     this.coords = coords;
+    this.photo = photo;
   }
 }
