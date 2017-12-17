@@ -25,6 +25,11 @@ const getId = function getId(businessJsonData: { venues: Array<Venue> }): number
   return businessJsonData.venues[0].id;
 };
 
+/**
+ * @description Retrieves the ID of a business based on it's name
+ * @param business
+ * @return {Promise<number>}
+ */
 async function retrieveBusinessId(business: BusinessSearchQuery): Promise<number> {
   const {city, name} = business;
   const searchBusinessIdParams = {
@@ -44,6 +49,12 @@ async function retrieveBusinessId(business: BusinessSearchQuery): Promise<number
   }
 }
 
+/**
+ * @description retrieves information of a business based on it's id. This information is used for
+ * web components
+ * @param businessId
+ * @return {Promise<number>}
+ */
 async function retrieveBusinessComponents(businessId: number): Promise<ScrapedResult> {
   const businessInfo = await fetchBusinessInfo(retrieveBusinessInfo(businessId));
   const reviewInfo = await fetchData(retrieveReview(businessId), getReview);

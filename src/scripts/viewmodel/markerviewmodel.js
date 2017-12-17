@@ -3,6 +3,7 @@
  */
 export default class MarkerViewModel {
   /**
+   * @description Whenever a marker is clicked, it is selected as the current business
    * @param {KnockoutObservable<number>} observableSelectedBusinessId
    * @param {number} businessId
    * @param {MarkerView} marker

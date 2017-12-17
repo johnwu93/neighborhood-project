@@ -1,5 +1,8 @@
 import generateInfoWindowTemplate from '../view/generateinfowindowtemplate';
 
+/**
+ * @description Displays an info window showing details of a currently selected business
+ */
 export default class InfoWindowViewModel {
   /**
    * @callback infoWindowWriterTask

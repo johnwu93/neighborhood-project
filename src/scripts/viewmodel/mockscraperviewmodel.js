@@ -3,6 +3,9 @@ import Business from '../entities/business';
 import type { BusinessScraperViewModel } from './businessscraperviewmodel';
 import businessFactory from '../entities/businessfactory';
 
+/**
+ * @description mock to retrieve businesses without using any HTTP requests
+ */
 export default class MockScraperViewModel implements BusinessScraperViewModel {
   // eslint-disable-next-line class-methods-use-this
   async fetch(): Promise<Array<Business>> {

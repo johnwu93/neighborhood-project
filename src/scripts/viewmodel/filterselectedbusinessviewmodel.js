@@ -1,6 +1,7 @@
 export default class FilterSelectedBusinessViewModel {
   /**
-   *
+   * @description contains a subset of businesses. This subset of data is determined by the search
+   * filter. Markers in Google maps will only be show through this subset.
    * @param {KnockoutObservableArray<number>} visibleBusinessIds
    * @param {KnockoutObservable<number>} selectedBusinessId,
    */

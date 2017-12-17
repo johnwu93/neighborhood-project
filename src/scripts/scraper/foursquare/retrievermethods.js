@@ -3,12 +3,16 @@
 import Review from '../../entities/review';
 import GPSCoordinates from '../../entities/gpscoordinates';
 
+
 type Photo = {
   prefix: string,
   suffix: string,
 }
 
-
+/**
+ * @description expected type when retrieving HTTP requests on photos of a business through the
+ * FourSquare API
+ */
 export type WrappedPhotos = {
   photos: {
     items: Array<Photo>,
@@ -20,7 +24,10 @@ type Tip = {
   canonicalUrl: string,
 }
 
-
+/**
+ * @description expected type when retrieving HTTP requests on tips of a business through the
+ * FourSquare API
+ */
 export type WrappedTips = {
   tips: {
     items: Array<Tip>
@@ -43,9 +50,18 @@ export type Venue = {
   photos: Array<string>,
 }
 
+/**
+ * @description expected type when retrieving HTTP requests on venues of a business through the
+ * FourSquare API
+ */
 export type WrappedVenue = {
   venue: Venue,
 }
+
+/**
+ * @description methods that uses data from APIs and puts it in the form for other components to use
+ */
+
 
 const unwrapPhotos = function unwrapPhotos(wrappedPhotos: WrappedPhotos): Array<Photo> {
   return wrappedPhotos.photos.items;

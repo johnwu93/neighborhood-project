@@ -1,9 +1,8 @@
 import ko from 'knockout';
 
 export default class BusinessSelectorViewModel {
-  // you just need the name and the current business
   /**
-   *
+   * @description a representation of a currently selected business
    * @param {KnockoutObservableArray<{name: string, id: number}>} businesses
    * @param {KnockoutObservable<number>} selectedBusinessId
    */

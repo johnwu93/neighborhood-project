@@ -3,7 +3,7 @@
  */
 export default class GoogleMarkerView {
   /**
-   * @description Interface representing a Marker in a map
+   * @description Interface representing a Marker in a map for Google Maps
    * @param {google.maps.Map} map
    * @param {google.maps.Marker} googleMarker
    */

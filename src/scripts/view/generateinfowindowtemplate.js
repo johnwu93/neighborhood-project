@@ -1,5 +1,5 @@
 /**
- *
+ * @description template for InfoWindow
  * @param {Business} business
  */
 const generateInfoWindowTemplate = function generateInfoWindowTemplate(business) {

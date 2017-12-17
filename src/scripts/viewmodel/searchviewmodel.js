@@ -4,7 +4,8 @@ const myBusinesses = new WeakMap();
 const myFilteredBusinessIds = new WeakMap();
 export default class SearchViewModel {
   /**
-   *
+   * @description Binds the query in a search bar that will show businesses whos name contains the
+   * query
    * @param {KnockoutObservableArray<{id: number, name: string}>} businesses
    */
   constructor(businesses) {

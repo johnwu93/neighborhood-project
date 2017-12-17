@@ -18,11 +18,13 @@ async function retrieveInformation(
     retrievedBusinesses.push(business);
   } catch (e) {
     console.log(e);
-    console.log(`Could not obtain ${businessQuery.name}`);
   }
 }
 
-
+/**
+ * @description Retrieves business data from four square and is fed to other web components.
+ * If it could not retrieve any businesses, a toast will be displayed.
+ */
 export default class FourSquareScraperViewModel implements BusinessScraperViewModel {
   businessQueries: [BusinessSearchQuery];
 

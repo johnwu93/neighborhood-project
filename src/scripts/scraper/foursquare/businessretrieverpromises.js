@@ -4,6 +4,10 @@ import type { JSONParameterType } from '../util';
 import { computeUrlQuery, retrieveJsonData } from '../util';
 import type { WrappedPhotos, WrappedTips, WrappedVenue } from './retrievermethods';
 
+/**
+ * @description Functions that retrieve information from Foursquare based on differnt APIs
+ */
+
 function retrieveBusinessAttribute<RetrieveResultType>(
   businessId: number,
   attribute: string,

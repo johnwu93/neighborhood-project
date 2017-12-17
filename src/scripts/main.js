@@ -6,7 +6,9 @@ import BusinessSearchQuery from './entities/businesssearchquery';
 
 GoogleMapsLoader.KEY = 'AIzaSyCW6adgGSbXijMqJsDFWYDN5_2lfAjon1c';
 
-
+/**
+ * Setups the app
+ */
 // noinspection JSUnresolvedFunction
 GoogleMapsLoader.load((google) => {
   const googleMapFactory = new GoogleMapFactory(google);

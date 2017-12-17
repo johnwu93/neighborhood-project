@@ -17,7 +17,7 @@ const closeMarkers = function closeMarkers(markers) {
 
 class MarkerListViewModel {
   /**
-   *
+   * @description Given a list of markers, it will display them reactively
    * @param {Array<MarkerView>} allMarkersList
    * @param {KnockoutObservableArray<MarkerView>} visibleMarkers,
    */

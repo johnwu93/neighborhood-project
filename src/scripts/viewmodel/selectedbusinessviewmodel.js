@@ -2,7 +2,6 @@ import ko from 'knockout';
 
 export default class SelectedBusinessViewModel {
   /**
-   *
    * @param {Array<BusinessMarker>}businessMarkers
    */
   constructor(businessMarkers) {

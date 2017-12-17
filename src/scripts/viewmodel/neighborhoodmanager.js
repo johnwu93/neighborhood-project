@@ -23,7 +23,7 @@ const convertNameIdPair = function convertNameIdPair({id, business}) {
   return {id, name};
 };
 /**
- * @description controls the state of the project and wraps abouts around bindins
+ * @description controls the state of the project and wraps abouts around bindings
  * @property {KnockoutObservable<BusinessMarker>} selectedBusinessMarker
  * @property {Array<BusinessMarker>} businessMarkers
  */
@@ -38,6 +38,10 @@ export default class NeighborhoodManager {
     this.retriever = retriever;
   }
 
+  /**
+   * @description set up asyncs, such as Google Maps
+   * @return {Promise.<void>}
+   */
   async initialize() {
     this.map = this.googleMapFactory.createMap();
     this.retriever.fetch()
@@ -46,7 +50,7 @@ export default class NeighborhoodManager {
   }
 
   /**
-   * @describe creates the binds and the necessary bindings to display map
+   * @describe creates the binds and the necessary bindings to display each ViewModel component
    * @param {[Business]} businesses
    */
   setupViews(businesses) {

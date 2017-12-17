@@ -3,7 +3,8 @@ import GPSCoordinates from '../entities/gpscoordinates';
 const MARU_COFFE_COORD = new GPSCoordinates(34.106572477771984, -118.28735127154621);
 
 /**
- * @description Convenient methods to call Google Map Objects
+ * @description Convenient methods to call Google Map Objects. This is used to not expose the
+ * google API
  */
 
 export default class GoogleMapFactory {
