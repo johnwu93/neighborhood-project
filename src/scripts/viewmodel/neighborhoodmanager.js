@@ -12,7 +12,6 @@ import FilterSelectedBusinessViewModel from './filterselectedbusinessviewmodel';
 import SelectedBusinessViewModel from './selectedbusinessviewmodel';
 import bindHeader from './headerviewmodel';
 import SelectedMarkerViewModel from './selectedmarkerviewmodel';
-import prettyPrintJson from '../scraper/prettyprintjson';
 
 /**
  *
@@ -45,7 +44,6 @@ export default class NeighborhoodManager {
   async initialize() {
     this.map = this.googleMapFactory.createMap();
     this.retriever.fetch()
-      .then(prettyPrintJson)
       .then(businesses => this.setupViews(businesses));
   }
 
