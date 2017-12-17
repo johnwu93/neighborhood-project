@@ -80,7 +80,7 @@ const createTasks = function createTasks() {
     createBuilder('index', 'build'),
   ];
   builders.forEach(({id, destination, htmlBuilder}) => {
-    const compilePugTask = `compilePug:${id}`;
+    const compilePugTask = `compilePug:${destination}:${id}`;
     gulp.task(compilePugTask, done => htmlBuilder.compilePug(done));
     gulp.task(`copyAssets:${destination}:${id}`, () => htmlBuilder.copyFiles());
     const injectHTMLDependenciesTask = `injectHTMLDependencies:${destination}:${id}`;

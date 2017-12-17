@@ -12,7 +12,7 @@ const util = require('./util');
 // noinspection JSUnresolvedFunction
 module.exports = merge(
   // to include scss, uncomment the next line;
-  styles.generateDevScssModuleRule('styles.css'),
+  styles.generateProdScssModuleRule('styles.css'),
   base.BASE_CONFIG,
   util.includeModule(
     projectPaths.includeRootDir('node_modules/materialize-css/dist'),

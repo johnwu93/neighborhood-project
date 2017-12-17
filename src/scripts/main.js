@@ -1,7 +1,8 @@
 import GoogleMapsLoader from 'google-maps';
 import GoogleMapFactory from './view/googlemapfactory';
 import NeighborhoodManager from './viewmodel/neighborhoodmanager';
-import MockScraperViewModel from './viewmodel/mockscraperviewmodel';
+import FourSquareScraperViewModel from './viewmodel/foursquarescraperviewmodel';
+import BusinessSearchQuery from './entities/businesssearchquery';
 
 GoogleMapsLoader.KEY = 'AIzaSyCW6adgGSbXijMqJsDFWYDN5_2lfAjon1c';
 
@@ -10,7 +11,17 @@ GoogleMapsLoader.KEY = 'AIzaSyCW6adgGSbXijMqJsDFWYDN5_2lfAjon1c';
 GoogleMapsLoader.load((google) => {
   const googleMapFactory = new GoogleMapFactory(google);
 
-  const retriever = new MockScraperViewModel();
+  const hipsterBusinessesQueries = [
+    'Maru Coffee',
+    'Intelligentsia',
+    'Mandrake Bar',
+    'The Thirsty Crow',
+    'Pho Cafe',
+    'Harvard & Stone',
+  ].map(businessName => new BusinessSearchQuery(businessName));
+
+
+  const retriever = new FourSquareScraperViewModel(hipsterBusinessesQueries);
   const neighborhoodManager = new NeighborhoodManager(retriever, googleMapFactory);
   // noinspection JSIgnoredPromiseFromCall
   neighborhoodManager.initialize();
