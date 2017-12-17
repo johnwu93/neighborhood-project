@@ -3,11 +3,18 @@ const gulp = require('gulp');
 const scss = require('gulp-scss');
 
 const STYLES_SOURCE_PATH = 'src/styles/styles.scss';
-const STYLES_DESTINATION_PATH = 'temp/styles';
 
-
-gulp.task('compileSCSS', () => {
+const compile = function compile(destination) {
   gulp.src(STYLES_SOURCE_PATH)
     .pipe(scss())
-    .pipe(gulp.dest(STYLES_DESTINATION_PATH));
+    .pipe(gulp.dest(destination));
+};
+
+gulp.task('compileDevSCSS', () => {
+  compile('temp/styles');
 });
+
+gulp.task('compileProdSCSS', () => {
+  compile('build/styles');
+});
+
