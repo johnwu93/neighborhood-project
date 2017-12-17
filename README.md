@@ -7,6 +7,8 @@ The information is retrieved from the FourSquare API and is displayed through th
 This project was created using the guidance of the MVVM design pattern. Knockout was used to
 bind the objects together.
 
+Project is deployed on: https://neighborhood-project.herokuapp.com/
+
 ## Installation
 This project requires multiple dependencies. In order to get these dependencies, you need to install 
 [npm](https://www.npmjs.com/). Details for installing this package can be found on this
