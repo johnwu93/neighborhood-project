@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
+const styles = require('./webpack.styles');
 
 const projectPaths = require('./webpack.project.paths');
 const base = require('./webpack.base');
@@ -12,18 +12,23 @@ const util = require('./util');
 // noinspection JSUnresolvedFunction
 module.exports = merge(
   // to include scss, uncomment the next line;
-  // generateDevScssModuleRule('styles.css'),
+  styles.generateDevScssModuleRule('styles.css'),
   base.BASE_CONFIG,
-  util.includeConvertedPugPlugin(),
+  util.includeModule(
+    projectPaths.includeRootDir('node_modules/materialize-css/dist'),
+    'materialize',
+    'css/materialize.css',
+    'js/materialize.js',
+  ),
+  util.includeVendors(
+    projectPaths.includeRootDir('node_modules/jquery/dist/jquery.js'),
+  ),
   {
     output: {
       path: projectPaths.PROD_DIRECTORY,
     },
     devtool: 'cheap-module-source-map',
     plugins: [
-      new UglifyJSPlugin({
-        sourceMap: true,
-      }),
       new CopyWebpackPlugin([
         {
           from: projectPaths.includeRootDir('production-scripts'),

@@ -65,24 +65,29 @@ class HTMLBuilder {
   }
 }
 
+const createBuilder = function createBuilder(id, destination) {
+  return {
+    id,
+    destination,
+    htmlBuilder:
+      new HTMLBuilder(path.join(ROOT, `src/templates/${id}.pug`), path.join(ROOT, destination)),
+  };
+};
 
 const createTasks = function createTasks() {
-  const builders = [{
-    id: 'index',
-    htmlBuilder:
-      new HTMLBuilder(path.join(ROOT, 'src/templates/index.pug'), path.join(ROOT, 'temp')),
-  }, {
-    id: 'infoWindow',
-    htmlBuilder:
-      new HTMLBuilder(path.join(ROOT, 'src/templates/infowindowindex.pug'), path.join(ROOT, 'temp')),
-  }];
-  builders.forEach(({id, htmlBuilder}) => {
+  const builders = [
+    createBuilder('index', 'temp'),
+    createBuilder('index', 'build'),
+  ];
+  builders.forEach(({id, destination, htmlBuilder}) => {
     const compilePugTask = `compilePug:${id}`;
     gulp.task(compilePugTask, done => htmlBuilder.compilePug(done));
-    gulp.task(`copyAssets:${id}`, () => htmlBuilder.copyFiles());
-    const injectHTMLDependenciesTask = `injectHTMLDependencies:${id}`;
+    gulp.task(`copyAssets:${destination}:${id}`, () => htmlBuilder.copyFiles());
+    const injectHTMLDependenciesTask = `injectHTMLDependencies:${destination}:${id}`;
     gulp.task(injectHTMLDependenciesTask, () => htmlBuilder.injectDependencies());
-    gulp.task(`buildHTML:${id}`, done => runSequence(compilePugTask, injectHTMLDependenciesTask, done));
+    gulp.task(`buildHTML:${destination}:${id}`, done =>
+      runSequence(compilePugTask, injectHTMLDependenciesTask, done),
+    );
   });
 };
 
