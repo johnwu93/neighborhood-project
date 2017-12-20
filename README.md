@@ -79,7 +79,7 @@ The project can be viewed by first running it on a local server with the
 following command;
 
 ```bash
-npm run-script start
+npm run-script watch
 ```
 
 The website should pop up automatically. If it doesn't, look at the terminal window that called the previous task.
