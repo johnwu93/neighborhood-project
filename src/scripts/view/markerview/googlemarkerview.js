@@ -10,14 +10,16 @@ export default class GoogleMarkerView {
   constructor(map, googleMarker) {
     this.map = map;
     this.googleMarker = googleMarker;
+    this.googleMarker.setMap(map);
+    this.googleMarker.setVisible(false);
   }
 
   show() {
-    this.googleMarker.setMap(this.map);
+    this.googleMarker.setVisible(true);
   }
 
   close() {
-    this.googleMarker.setMap(null);
+    this.googleMarker.setVisible(false);
   }
 
   bounce() {
