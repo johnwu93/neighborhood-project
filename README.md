@@ -9,6 +9,17 @@ bind the objects together.
 
 Project is deployed on: https://neighborhood-project.herokuapp.com/
 
+## Abridged Version of Running the Project
+***If you would like to skip, the Installation and Running Project sections of this README, read this instead***
+
+Since the local `dev` folder (`temp`) is included onto this project, you can simply install all dependencies
+using `npm install` (Read *Installation* section for details).
+
+Then, run the project by following the instructions in the *Running Project* section.
+
+If you modify anything in the temp folder, then you would have to follow the *Installation* and
+*Building Project* sections of the README to reconstruct it.
+
 ## Installation
 This project requires multiple dependencies. In order to get these dependencies, you need to install 
 [npm](https://www.npmjs.com/). Details for installing this package can be found on this
@@ -67,7 +78,10 @@ sudo apt-get install ruby2.4
 sudo apt-get install ruby`ruby -e 'puts RUBY_VERSION[/\d+\.\d+/]'`-dev
 ``` 
 
-## Running Project
+Also, make sure you have the latest version of Chrome. The latest version is about v63.
+This let's you use `async/awaits` for your code
+
+## Building Project
 Afterwards you will need to all the bundled all the javascript files into one file with the 
 following command on the terminal:
 
@@ -75,6 +89,8 @@ following command on the terminal:
 npm run-script build:dev
 ```
 
+
+## Running Project
 The project can be viewed by first running it on a local server with the 
 following command;
 
@@ -90,6 +106,8 @@ this:
 http://localhost:3000
 ```
 
+
+## Questions and Concerns
 If you have any trouble running this project or have some concerns, 
 please notify me through my email, johnwu93@gmail.com
 
