@@ -1,0 +1,45 @@
+html,
+body {
+  font-family: Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+.map-container {
+  height: 100vh; }
+
+#map {
+  height: 100%; }
+
+.info-text {
+  font-size: 1vmax; }
+  .info-text .btn {
+    margin-bottom: 1vmax; }
+
+body {
+  padding-left: 300px; }
+
+@media only screen and (max-width: 992px) {
+  body {
+    padding-left: 0; } }
+header {
+  margin-top: 0 !important;
+  margin-bottom: 3px !important; }
+
+#toast-container {
+  top: auto !important;
+  right: auto !important;
+  bottom: 0;
+  left: 0; }
+
+.flex {
+  display: flex;
+  flex-wrap: wrap; }
+
+.review {
+  display: inline-flex;
+  vertical-align: middle; }
+
+.photo {
+  width: 100%;
+  overflow: hidden; }
