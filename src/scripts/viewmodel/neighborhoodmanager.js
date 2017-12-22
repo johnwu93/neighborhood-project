@@ -42,9 +42,9 @@ export default class NeighborhoodManager {
    * @return {Promise.<void>}
    */
   async initialize() {
+    const businessesPromise = this.retriever.fetch();
     this.map = this.googleMapFactory.createMap();
-    this.retriever.fetch()
-      .then(businesses => this.setupViews(businesses));
+    this.setupViews(await businessesPromise);
   }
 
   /**

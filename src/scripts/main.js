@@ -1,13 +1,13 @@
-import GoogleMapsLoader from 'google-maps';
 import GoogleMapFactory from './view/googlemapfactory';
 import NeighborhoodManager from './viewmodel/neighborhoodmanager';
 import FourSquareScraperViewModel from './viewmodel/foursquarescraperviewmodel';
 import BusinessSearchQuery from './entities/businesssearchquery';
+import googleMapsLoaderFactory from './viewmodel/googlemapsloaderfactory';
 
-GoogleMapsLoader.KEY = 'AIzaSyCW6adgGSbXijMqJsDFWYDN5_2lfAjon1c';
+const GoogleMapsLoader = googleMapsLoaderFactory();
 
 /**
- * Setups the app
+ * Setups App
  */
 // noinspection JSUnresolvedFunction
 GoogleMapsLoader.load((google) => {
